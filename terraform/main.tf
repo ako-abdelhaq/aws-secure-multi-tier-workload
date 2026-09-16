@@ -1,0 +1,32 @@
+module "network" {
+  source = "./network"
+
+  vpc_cidr           = var.vpc_cidr
+  availability_zones = var.availability_zones
+  project_prefix     = var.project_prefix
+}
+
+module "security" {
+  source = "./security"
+
+  project_prefix = var.project_prefix
+  vpc_id         = module.network.vpc_id
+}
+
+module "alb" {
+  source = "./alb"
+
+  project_prefix    = var.project_prefix
+  vpc_id            = module.network.vpc_id
+  public_subnet_ids = module.network.public_subnet_ids
+  alb_sg_id         = module.security.alb_sg_id
+}
+
+module "vpc_endpoints" {
+  source = "./vpc_endpoints"
+
+  project_prefix        = var.project_prefix
+  vpc_id                = module.network.vpc_id
+  private_app_subnet_id = module.network.private_app_subnet_id
+  vpc_endpoints_sg_id   = module.security.vpc_endpoints_sg_id
+}
