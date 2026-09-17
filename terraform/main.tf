@@ -40,3 +40,15 @@ module "database" {
   
   db_username          = var.db_username
 }
+
+module "compute" {
+  source = "./compute"
+
+  project_prefix        = var.project_prefix
+  public_web_subnet_id  = module.network.public_web_subnet_a_id
+  private_app_subnet_id = module.network.private_app_subnet_id
+  web_sg_id             = module.security.web_sg_id
+  app_sg_id             = module.security.app_sg_id
+  db_secret_arn         = module.database.db_secret_arn
+  target_group_arn      = module.alb.target_group_arn
+}
