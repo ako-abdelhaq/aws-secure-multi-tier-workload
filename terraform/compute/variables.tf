@@ -3,6 +3,11 @@ variable "project_prefix" {
   type        = string
 }
 
+variable "vpc_id" {
+  description = "The ID of the VPC where security groups will be created."
+  type        = string
+}
+
 variable "public_web_subnet_id" {
   description = "The ID of the public subnet for the Web tier."
   type        = string
@@ -23,12 +28,29 @@ variable "app_sg_id" {
   type        = string
 }
 
+variable "target_group_arn" {
+  description = "The ARN of the ALB Target Group to attach the Web instance."
+  type        = string
+}
+
 variable "db_secret_arn" {
   description = "The ARN of the managed database secret."
   type        = string
 }
 
-variable "target_group_arn" {
-  description = "The ARN of the ALB Target Group to attach the Web instance."
+variable "db_host" {
+  description = "RDS DB instance hostname or endpoint"
   type        = string
 }
+
+variable "db_username" {
+  description = "Database master username"
+  type        = string
+}
+
+variable "db_password" {
+  description = "Database master password"
+  type        = string
+  sensitive   = true
+}
+

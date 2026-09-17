@@ -22,13 +22,14 @@ module "alb" {
   alb_sg_id         = module.security.alb_sg_id
 }
 
-module "vpc-endpoints" {
-  source = "./vpc-endpoints"
+module "vpc_endpoints" {
+  source = "./vpc_endpoints"
 
-  project_prefix        = var.project_prefix
-  vpc_id                = module.network.vpc_id
-  private_app_subnet_id = module.network.private_app_subnet_id
-  vpc_endpoints_sg_id   = module.security.vpc_endpoints_sg_id
+  project_prefix         = var.project_prefix
+  vpc_id                 = module.network.vpc_id
+  private_app_subnet_id  = module.network.private_app_subnet_id
+  vpc_endpoints_sg_id    = module.security.vpc_endpoints_sg_id
+  private_route_table_id = module.network.private_route_table_id # Passed for S3 Gateway
 }
 
 module "database" {
@@ -45,10 +46,17 @@ module "compute" {
   source = "./compute"
 
   project_prefix        = var.project_prefix
+  vpc_id                = module.network.vpc_id
   public_web_subnet_id  = module.network.public_web_subnet_a_id
   private_app_subnet_id = module.network.private_app_subnet_id
   web_sg_id             = module.security.web_sg_id
   app_sg_id             = module.security.app_sg_id
   db_secret_arn         = module.database.db_secret_arn
   target_group_arn      = module.alb.target_group_arn
+
+  db_host     = split(":", module.database.db_endpoint)[0]
+  db_username     = var.db_username
+  db_password = var.db_password
+
 }
+

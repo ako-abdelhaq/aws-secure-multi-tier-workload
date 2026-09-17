@@ -32,3 +32,8 @@ output "db_secret_arn" {
   description = "The ARN of the managed database secret in Secrets Manager."
   value       = module.database.db_secret_arn
 }
+
+output "artifact_bucket_name" {
+  description = "S3 bucket for application release bundles"
+  value       = module.compute.artifact_bucket_name
+}

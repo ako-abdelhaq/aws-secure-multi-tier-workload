@@ -17,3 +17,8 @@ variable "vpc_endpoints_sg_id" {
   description = "The Security Group ID for the endpoints."
   type        = string
 }
+
+variable "private_route_table_id" {
+  description = "The ID of the private route table to associate with the S3 Gateway Endpoint."
+  type        = string
+}
