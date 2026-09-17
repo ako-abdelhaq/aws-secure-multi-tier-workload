@@ -1,0 +1,18 @@
+[Unit]
+Description=Node.js API Service
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/opt/app
+
+# Automatically load the variables provisioned by Terraform
+EnvironmentFile=/etc/default/node-app
+
+ExecStart=/usr/bin/node /opt/app/app.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
