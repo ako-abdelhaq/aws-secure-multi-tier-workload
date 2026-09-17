@@ -55,6 +55,16 @@ resource "aws_vpc_security_group_ingress_rule" "alb_http_in" {
   ip_protocol       = "tcp"
 }
 
+# We'll not use HTTPs for the dev environment (we'll keep it for production)
+resource "aws_vpc_security_group_ingress_rule" "alb_https_in" {
+  security_group_id = aws_security_group.alb.id
+  description       = "Allow public inbound HTTPs"
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
+}
+
 resource "aws_vpc_security_group_egress_rule" "alb_to_web" {
   security_group_id            = aws_security_group.alb.id
   description                  = "Forward traffic to Web EC2 on port 80"

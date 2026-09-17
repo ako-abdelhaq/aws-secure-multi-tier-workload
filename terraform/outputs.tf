@@ -13,12 +13,22 @@ output "vpc_id" {
   value       = module.network.vpc_id
 }
 
-output "public_web_subnet_id" {
-  description = "The ID of the public web subnet."
-  value       = module.network.public_web_subnet_id
+output "public_subnet_ids" {
+  description = "The IDs of the public web subnet."
+  value       = module.network.public_subnet_ids
 }
 
 output "alb_dns_name" {
   description = "The public DNS name of the ALB entrypoint."
   value       = module.alb.alb_dns_name
+}
+
+output "db_endpoint" {
+  description = "The private connection endpoint for the RDS database."
+  value       = module.database.db_endpoint
+}
+
+output "db_secret_arn" {
+  description = "The ARN of the managed database secret in Secrets Manager."
+  value       = module.database.db_secret_arn
 }

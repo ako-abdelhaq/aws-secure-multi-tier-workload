@@ -22,11 +22,21 @@ module "alb" {
   alb_sg_id         = module.security.alb_sg_id
 }
 
-module "vpc_endpoints" {
-  source = "./vpc_endpoints"
+module "vpc-endpoints" {
+  source = "./vpc-endpoints"
 
   project_prefix        = var.project_prefix
   vpc_id                = module.network.vpc_id
   private_app_subnet_id = module.network.private_app_subnet_id
   vpc_endpoints_sg_id   = module.security.vpc_endpoints_sg_id
+}
+
+module "database" {
+  source = "./database"
+
+  project_prefix       = var.project_prefix
+  db_subnet_group_name = module.network.db_subnet_group_name
+  db_sg_id             = module.security.db_sg_id
+  
+  db_username          = var.db_username
 }
