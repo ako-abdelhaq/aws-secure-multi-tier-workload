@@ -23,7 +23,7 @@ resource "aws_db_instance" "main" {
 
   # Isolation & Cost Control
   multi_az            = false # Cost control
-  publicly_accessible = false
+  publicly_accessible = false # No public IP is assigned 
   skip_final_snapshot = true # Used for clean 'terraform destroy'
 
   tags = {

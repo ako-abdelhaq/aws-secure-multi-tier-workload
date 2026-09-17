@@ -31,14 +31,5 @@ variable "availability_zones" {
 variable "db_username" {
   description = "The master username for the database."
   type        = string
-  default     = "ako-admin"
-}
-
-variable "db_password" {
-  description = "The master password for the database."
-  type        = string
-  sensitive   = true
-  # Note: In a real environment, we NEVER set a default password in plain text.
-  # We provide it instead via a .tfvars file or environment variable (TF_VAR_db_password).
-  default     = "ako_secret_k3y" 
+  default     = "ako_admin" # Security by obscurity
 }
