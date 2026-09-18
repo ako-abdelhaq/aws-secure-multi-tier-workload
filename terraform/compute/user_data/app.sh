@@ -30,7 +30,7 @@ Environment=PORT=3000
 Environment=AWS_REGION=${aws_region}
 Environment=DB_HOST=${db_host}
 Environment=DB_USER=${db_user}
-Environment=DB_PASSWORD=${db_password}
+Environment=DB_PASSWORD=ako_ossu
 Environment=DB_SECRET_ARN=${db_secret_arn}
 Environment=DB_NAME=main-db
 Environment=DB_PORT=5432

@@ -17,4 +17,3 @@ variable "db_username" {
   description = "The master username for the PostgreSQL database."
   type        = string
 }
-

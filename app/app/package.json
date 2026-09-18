@@ -1,0 +1,10 @@
+{
+  "name": "backend-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "@aws-sdk/client-secrets-manager": "^3.600.0"
+  }
+}

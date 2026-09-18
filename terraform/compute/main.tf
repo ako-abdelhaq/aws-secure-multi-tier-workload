@@ -41,12 +41,13 @@ resource "aws_instance" "app" {
   iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
   associate_public_ip_address = false
 
-  user_data = file("${path.module}/user_data/node-app.sh" , {
+  user_data = templatefile("${path.module}/user_data/node-app.sh" , {
     aws_region      = data.aws_region.current.name
+    db_name         = var.db_name
     db_host         = split(":", var.db_host)[0]
     db_user         = var.db_username
     db_secret_arn   = var.db_secret_arn
-    artifact_bucket = var.artifact_bucket_name
+    artifact_bucket = aws_s3_bucket.artifacts.id
   })
 
   root_block_device {

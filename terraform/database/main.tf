@@ -3,7 +3,7 @@ resource "aws_db_instance" "main" {
 
   # Engine settings
   engine         = "postgres"
-  engine_version = "15.4" # Or use "16.3" depending on preference
+  engine_version = "16.9" 
   instance_class = "db.t4g.micro"
 
   # Storage settings
@@ -12,7 +12,7 @@ resource "aws_db_instance" "main" {
   storage_encrypted = true
 
   # Database settings
-  db_name  = "main-db"
+  db_name  = "main_db"
   username = var.db_username
   # Manage passwords with AWS secret manager
   manage_master_user_password = true

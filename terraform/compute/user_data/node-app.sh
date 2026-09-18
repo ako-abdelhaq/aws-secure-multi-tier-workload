@@ -4,17 +4,17 @@ dnf update -y
 dnf install -y nodejs
 
 # Create the application directory
-mkdir -p /opt/app
+mkdir -p /opt/app && cd /opt/app
 chown -R ec2-user:ec2-user /opt/app
 
 # Dynamically generate the Environment File with Terraform outputs
 cat << 'EOF' > /etc/default/node-app
-NODE_ENV=production
+NODE_ENV=dev
 PORT=3000
 AWS_REGION=${aws_region}
 DB_HOST=${db_host}
 DB_USER=${db_user}
-DB_NAME=appdb
+DB_NAME=${db_name}
 DB_PORT=5432
 DB_SECRET_ARN=${db_secret_arn}
 EOF
@@ -23,18 +23,48 @@ EOF
 chmod 640 /etc/default/node-app
 chown root:ec2-user /etc/default/node-app
 
+#echo "begin looping" > ako-file.txt
+
 # The Wait Loop: Wait for the developer to upload the artifact to S3
 echo "Waiting for app artifact to appear in S3..."
-while ! aws s3 cp s3://${artifact_bucket}/release/app-v1.tar.gz ./; do
+while ! aws s3 cp s3://${artifact_bucket}/release/app-v1.tar.gz /opt/app; do
   echo "Artifact not found. Retrying in 10 seconds..."
   sleep 10
 done
 
+#echo "download complete" > final.txt
+
 # Extract and start the application
-tar -xzf app-v1.0.0.tar.gz
+tar -xzf app-v1.tar.gz
 chown -R ec2-user:ec2-user /opt/app
 cp node-app.service /etc/systemd/system/
+
+
+
+
+# 1. Elevate to root so we can modify the secure environment file
+#sudo su -
+
+# 2. Source the current environment variables to grab the DB_SECRET_ARN
+source /etc/default/node-app
+
+# 3. Get the current AWS region dynamically from the EC2 metadata
+REGION=${aws_region}
+#echo $REGION >> final.txt
+
+# 4. Fetch the secure JSON payload from AWS Secrets Manager
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id "$DB_SECRET_ARN" --region "$REGION" --query "SecretString" --output text)
+#echo $SECRET_JSON >> final.txt
+
+# 5. Extract the password from the JSON string (using Node.js instead of installing jq)
+DB_PASSWORD=$(node -pe "JSON.parse(process.argv[1]).password" "$SECRET_JSON")
+#echo $DB_PASSWORD >> final.txt
+
+# 6. Append the plaintext password to the systemd environment file
+echo "DB_PASSWORD=\"$DB_PASSWORD\"" >> /etc/default/node-app
 
 systemctl daemon-reload
 systemctl enable node-app
 systemctl start node-app
+
+su - ec2-user

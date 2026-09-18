@@ -22,8 +22,8 @@ module "alb" {
   alb_sg_id         = module.security.alb_sg_id
 }
 
-module "vpc_endpoints" {
-  source = "./vpc_endpoints"
+module "vpc-endpoints" {
+  source = "./vpc-endpoints"
 
   project_prefix         = var.project_prefix
   vpc_id                 = module.network.vpc_id
@@ -54,9 +54,13 @@ module "compute" {
   db_secret_arn         = module.database.db_secret_arn
   target_group_arn      = module.alb.target_group_arn
 
-  db_host     = split(":", module.database.db_endpoint)[0]
-  db_username     = var.db_username
-  db_password = var.db_password
+  db_host               = split(":", module.database.db_endpoint)[0]
+  db_username           = var.db_username
+  db_name               = module.database.db_name
+
+  depends_on = [
+    module.vpc-endpoints
+  ]
 
 }
 

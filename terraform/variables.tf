@@ -33,10 +33,3 @@ variable "db_username" {
   type        = string
   default     = "ako_admin" # Security by obscurity
 }
-
-variable "db_password" {
-  description = "The master password for the database."
-  type        = string
-  sensitive = true
-  default = "ako-ossu"
-}

@@ -106,7 +106,7 @@ resource "aws_vpc_security_group_egress_rule" "web_https_out" {
 }
 
 # =========================================================
-# 4. APP TIER RULES (Web Ingress -> DB Egress)
+# 4. APP TIER RULES
 # =========================================================
 
 resource "aws_vpc_security_group_ingress_rule" "app_from_web" {
@@ -136,6 +136,16 @@ resource "aws_vpc_security_group_egress_rule" "app_to_endpoints" {
   ip_protocol                  = "tcp"
 }
 
+resource "aws_vpc_security_group_egress_rule" "app_outbound_https" {
+  security_group_id = aws_security_group.app.id
+  description       = "Allow outbound HTTPS for S3 Gateway and AWS APIs"
+  cidr_ipv4         = "0.0.0.0/0" 
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
+}
+
+
 # =========================================================
 # 5. DATABASE TIER RULES
 # =========================================================
@@ -161,3 +171,4 @@ resource "aws_vpc_security_group_ingress_rule" "endpoints_from_app" {
   to_port                      = 443
   ip_protocol                  = "tcp"
 }
+

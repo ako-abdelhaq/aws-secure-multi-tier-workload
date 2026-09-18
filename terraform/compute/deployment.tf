@@ -1,4 +1,6 @@
 # S3 Bucket for compiled application releases
+data "aws_caller_identity" "current" {}
+
 resource "aws_s3_bucket" "artifacts" {
   bucket        = "${var.project_prefix}-app-artifacts-${data.aws_caller_identity.current.account_id}"
   force_destroy = true
@@ -27,7 +29,7 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
 # Attach S3 Read Policy to EC2 Shared Role
 resource "aws_iam_role_policy" "s3_artifact_read" {
   name = "${var.project_prefix}-s3-artifact-read"
-  role = aws_iam_role.ec2_shared_role.id
+  role = aws_iam_role.ec2_shared_role.name
 
   policy = jsonencode({
     Version = "2012-10-17"
