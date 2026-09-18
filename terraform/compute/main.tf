@@ -18,7 +18,7 @@ resource "aws_instance" "web" {
   instance_type               = "t4g.micro"
   subnet_id                   = var.public_web_subnet_id
   vpc_security_group_ids      = [var.web_sg_id]
-  iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile        = aws_iam_instance_profile.web_profile.name
   associate_public_ip_address = true
 
   user_data = file("${path.module}/user_data/web.sh")
@@ -38,7 +38,7 @@ resource "aws_instance" "app" {
   instance_type               = "t4g.micro"
   subnet_id                   = var.private_app_subnet_id
   vpc_security_group_ids      = [var.app_sg_id]
-  iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile        = aws_iam_instance_profile.app_profile.name
   associate_public_ip_address = false
 
   user_data = templatefile("${path.module}/user_data/node-app.sh" , {
