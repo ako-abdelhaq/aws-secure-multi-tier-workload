@@ -1,5 +1,6 @@
 # In the local application directory
 # Create app.js and package.json from the previous step here
+cd app/app
 npm install --omit=dev
 tar -czf app-v1.tar.gz app.js package.json node_modules/ node-app.service
 

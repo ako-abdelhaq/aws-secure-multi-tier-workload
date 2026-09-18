@@ -14,6 +14,7 @@ resource "aws_db_instance" "main" {
   # Database settings
   db_name  = "main_db"
   username = var.db_username
+  
   # Manage passwords with AWS secret manager
   manage_master_user_password = true
 

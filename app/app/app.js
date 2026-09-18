@@ -56,7 +56,10 @@ initSchema();
 
 // GET /health
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
+  res.status(200).json({ 
+    status: 'ok',
+    message: "app is working properly!" 
+  });
 });
 
 // GET /products

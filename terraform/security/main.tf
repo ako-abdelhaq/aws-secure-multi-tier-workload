@@ -80,7 +80,7 @@ resource "aws_vpc_security_group_egress_rule" "alb_to_web" {
 
 resource "aws_vpc_security_group_ingress_rule" "web_from_alb" {
   security_group_id            = aws_security_group.web.id
-  description                  = "Allow inbound HTTP exclusively from ALB"
+  description                  = "Allow inbound HTTP exclusively from ALB to the Web instance"
   referenced_security_group_id = aws_security_group.alb.id
   from_port                    = 80
   to_port                      = 80

@@ -28,6 +28,11 @@ variable "app_sg_id" {
   type        = string
 }
 
+variable "alb_dns_name" {
+  description = "The dns name of the ALB"
+  type        = string
+}
+
 variable "target_group_arn" {
   description = "The ARN of the ALB Target Group to attach the Web instance."
   type        = string

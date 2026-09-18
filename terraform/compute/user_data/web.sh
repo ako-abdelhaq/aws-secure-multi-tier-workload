@@ -1,36 +1,58 @@
 #!/bin/bash
+
+# 1. Install Nginx
 dnf update -y
 dnf install -y nginx
 
 # Remove default welcome block if present
-rm -f /etc/nginx/conf.d/default.conf
+rm -f /etc/nginx/conf.d/default.conf || true
 
-# Configure the reverse proxy using internal DNS
-cat << 'EON' > /etc/nginx/conf.d/app.conf
+# 2. Write the Nginx config
+# Note: Using 'EOF' with single quotes tells Bash to ignore the $ variables
+# so Nginx variables like $host aren't destroyed during boot.
+cat << 'EOF' > /etc/nginx/conf.d/app.conf
 server {
-    listen 80 default_server;
-    server_name _;
-    server_tokens off;
+    listen 80;
 
-    # Point to the VPC DNS resolver (10.0.0.2)
-    resolver 10.0.0.2 valid=10s ipv6=off;
-    set $upstream_endpoint http://api.sec-app.internal:3000;
+    # Amazon VPC DNS resolver
+    resolver 169.254.169.253 valid=10s;
+
+    location /health {
+        access_log off;
+        return 200 '{
+            "success": true,
+            "message": "web is working properly!",
+            "data": {
+                "status": "healthy"
+            }
+        }';
+        add_header Content-Type text/plain;
+    }
+
+
+    location /app-health {
+        proxy_pass http://app.sec-app.internal:3000/health;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 
     location / {
-        proxy_pass $upstream_endpoint;
-        proxy_http_version 1.2;
+        set $upstream_endpoint http://app.sec-app.internal;
 
+        proxy_pass http://app.sec-app.internal:3000;
+        
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-
-        proxy_connect_timeout 5s;
-        proxy_read_timeout 60s;
-        proxy_send_timeout 60s;
     }
 }
-EON
+EOF
+
+# 3. Clean up defaults and start Nginx
+rm -f /etc/nginx/sites-enabled/default
+rm -f /etc/nginx/conf.d/default.conf
 
 systemctl enable nginx
 systemctl restart nginx

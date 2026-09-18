@@ -53,6 +53,7 @@ module "compute" {
   app_sg_id             = module.security.app_sg_id
   db_secret_arn         = module.database.db_secret_arn
   target_group_arn      = module.alb.target_group_arn
+  alb_dns_name          = module.alb.alb_dns_name
 
   db_host               = split(":", module.database.db_endpoint)[0]
   db_username           = var.db_username

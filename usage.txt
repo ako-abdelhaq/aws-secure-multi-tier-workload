@@ -1,0 +1,3 @@
+1 terraform apply
+2 bash app/app/build.sh
+3 

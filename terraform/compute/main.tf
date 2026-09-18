@@ -1,3 +1,6 @@
+# Pass the current regoin to the Node SDK
+data "aws_region" "current" {}
+
 # Fetch the latest Amazon Linux 2023 ARM64 AMI
 data "aws_ami" "al2023_arm" {
   most_recent = true
@@ -9,19 +12,35 @@ data "aws_ami" "al2023_arm" {
   }
 }
 
-# Pass the current regoin to the Node SDK
-data "aws_region" "current" {}
+# Fetch the latest Amazon Linux 2023 x86_64 AMI
+data "aws_ami" "amazon_linux_x86" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-x86_64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+}
 
 # Web EC2 (Public Subnet)
 resource "aws_instance" "web" {
-  ami                         = data.aws_ami.al2023_arm.id
-  instance_type               = "t4g.micro"
+  ami                         = data.aws_ami.amazon_linux_x86.id
+  instance_type               = "t3.micro" #You can also use t4g.micro
   subnet_id                   = var.public_web_subnet_id
   vpc_security_group_ids      = [var.web_sg_id]
   iam_instance_profile        = aws_iam_instance_profile.web_profile.name
   associate_public_ip_address = true
 
-  user_data = file("${path.module}/user_data/web.sh")
+  #user_data = file("${path.module}/user_data/web.sh")
+  user_data = templatefile("${path.module}/user_data/web.sh", {
+    internal_alb_dns = var.alb_dns_name  # Ensure this points to your actual ALB resource
+  })
 
   root_block_device {
     encrypted   = true
@@ -34,8 +53,8 @@ resource "aws_instance" "web" {
 
 # App EC2 (Private Subnet)
 resource "aws_instance" "app" {
-  ami                         = data.aws_ami.al2023_arm.id
-  instance_type               = "t4g.micro"
+  ami                         = data.aws_ami.amazon_linux_x86.id
+  instance_type               = "t3.micro"
   subnet_id                   = var.private_app_subnet_id
   vpc_security_group_ids      = [var.app_sg_id]
   iam_instance_profile        = aws_iam_instance_profile.app_profile.name

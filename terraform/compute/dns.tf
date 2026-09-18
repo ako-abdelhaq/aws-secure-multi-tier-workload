@@ -10,7 +10,7 @@ resource "aws_route53_zone" "internal" {
 
 resource "aws_route53_record" "app" {
   zone_id = aws_route53_zone.internal.zone_id
-  name    = "api.sec-app.internal"
+  name    = "app.sec-app.internal"
   type    = "A"
   ttl     = 60
   records = [aws_instance.app.private_ip]
