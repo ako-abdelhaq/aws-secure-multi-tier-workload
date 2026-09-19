@@ -26,7 +26,16 @@ chown root:ec2-user /etc/default/node-app
 
 # The Wait Loop: Wait for the developer to upload the artifact to S3
 echo "Waiting for app artifact to appear in S3..."
+
+timeout_seconds=300  # Trying to grab artifacts for 5 minutes 
+start_time=$SECONDS
 while ! aws s3 cp s3://${artifact_bucket}/release/app-v1.tar.gz /opt/app; do
+  elapsed=$(( SECONDS - start_time ))
+  if [ $elapsed -ge $timeout_seconds ]; then
+    echo "Timeout of ${timeout_seconds} s reached. Aborting."
+    exit 1
+  fi
+  
   echo "Artifact not found. Retrying in 10 seconds..."
   sleep 10
 done

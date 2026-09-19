@@ -72,7 +72,6 @@ resource "aws_instance" "app" {
     aws_region      = data.aws_region.current.name
     db_name         = var.db_name
     db_host         = split(":", var.db_host)[0]
-    db_user         = var.db_username
     db_secret_arn   = var.db_secret_arn
     artifact_bucket = aws_s3_bucket.artifacts.id
   })
