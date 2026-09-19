@@ -16,12 +16,11 @@ aws s3api put-bucket-tagging \
   --bucket sec-app-cloudtrail-logs-$ACCOUNT_ID \
   --tagging 'TagSet=[{Key=TestEvent,Value=Triggered}]'
 
-# 3. Wait for CloudTrail delivery cycle (~5 minutes) and check CloudTrail for the triggered event
+# 3. Wait for CloudTrail delivery cycle (~5 minutes) then check CloudTrail for the triggered event
 
 aws cloudtrail lookup-events \
   --lookup-attributes AttributeKey=EventName,AttributeValue=PutBucketTagging \
   --max-items 3
-
 # Expected output a log with eventName "PutBucketTagging" and the following tagging under requestParameters
 #   "TagSet": {
 #        "Tag": {
@@ -29,6 +28,23 @@ aws cloudtrail lookup-events \
 #            "Key": "TestEvent"
 #        }
 #    }
+
+# Look for the file that contains the log record
+aws s3 ls s3://sec-app-cloudtrail-logs-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/2026/09/19/
+# Then look for the file with time directly after the eventTime of the triggered event
+
+# Grab the log file containing the record 
+aws s3 cp s3://sec-app-cloudtrail-logs-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/2026/09/19/987654321012_CloudTrail_eu-west-3_20260919T2220Z_yioxVq3W623BVfja.json.gz ./test_log.gz
+
+zcat ./test_log.gz | grep "PutBucketTagging"
+# Look at the output and look for the log with eventName "PutBucketTagging" and the following tagging under requestParameters
+#   "TagSet": {
+#        "Tag": {
+#            "Value": "Triggered",
+#            "Key": "TestEvent"
+#        }
+#    }
+
 
 # 4. Cryptographic validation 
 # In this step we'll have to wait for about 1h for AWS t generate the digest files
