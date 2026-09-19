@@ -43,6 +43,7 @@ variable "db_secret_arn" {
   type        = string
 }
 
+
 variable "db_host" {
   description = "RDS DB instance hostname or endpoint"
   type        = string

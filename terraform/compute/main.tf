@@ -42,10 +42,18 @@ resource "aws_instance" "web" {
     internal_alb_dns = var.alb_dns_name  # Ensure this points to your actual ALB resource
   })
 
+  user_data_replace_on_change = true
+
   root_block_device {
     encrypted   = true
     volume_type = "gp3"
     volume_size = 8
+  }
+
+  lifecycle {
+    ignore_changes = [
+      ami # Tells Terraform: "Even if a newer AMI exists, do not destroy my running app to upgrade it!"
+    ]
   }
 
   tags = { Name = "${var.project_prefix}-web-ec2", Tier = "Web" }
@@ -73,6 +81,12 @@ resource "aws_instance" "app" {
     encrypted   = true
     volume_type = "gp3"
     volume_size = 8
+  }
+
+  lifecycle {
+    ignore_changes = [
+      ami # Tells Terraform: "Even if a newer AMI exists, do not destroy my running app to upgrade it!"
+    ]
   }
 
   tags = { Name = "${var.project_prefix}-app-ec2", Tier = "App" }

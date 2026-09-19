@@ -17,3 +17,8 @@ variable "db_username" {
   description = "The master username for the PostgreSQL database."
   type        = string
 }
+
+variable "key_arn" {
+  description = "The app custom encryption key ARN"
+  type = string
+}

@@ -62,9 +62,38 @@ resource "aws_iam_role_policy" "app_secrets_read" {
   })
 }
 
+resource "aws_iam_policy" "app_secrets_policy" {
+  name        = "AppTierSecretsAccess"
+  description = "Allow Node.js to fetch and decrypt the RDS managed secret"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        # 1. Permission to fetch the secret payload
+        Effect   = "Allow"
+        Action   = "secretsmanager:GetSecretValue"
+        # Reference the dynamically created secret from the RDS instance
+        Resource = var.db_secret_arn
+      },
+      {
+        # 2. Permission to decrypt the payload using your CMK
+        Effect   = "Allow"
+        Action   = "kms:Decrypt"
+        Resource = aws_kms_key.app_key.arn
+      }
+    ]
+  })
+}
+
+# Attach this policy to the App Tier's IAM Role
+resource "aws_iam_role_policy_attachment" "app_secrets_attach" {
+  role       = aws_iam_role.app_role.name
+  policy_arn = aws_iam_policy.app_secrets_policy.arn
+}
+
 # App Instance Profile
 resource "aws_iam_instance_profile" "app_profile" {
   name = "app-instance-profile"
   role = aws_iam_role.app_role.name
 }
-

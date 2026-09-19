@@ -40,6 +40,7 @@ module "database" {
   db_sg_id             = module.security.db_sg_id
   
   db_username          = var.db_username
+  key_arn              = module.compute.key_arn
 }
 
 module "compute" {
@@ -58,6 +59,7 @@ module "compute" {
   db_host               = split(":", module.database.db_endpoint)[0]
   db_username           = var.db_username
   db_name               = module.database.db_name
+  
 
   depends_on = [
     module.vpc-endpoints

@@ -1,3 +1,7 @@
+output "db_arn" {
+  description = "The ARN of the main DB"
+  value = aws_db_instance.main.arn
+}
 output "db_endpoint" {
   description = "The connection endpoint for the PostgreSQL database."
   value       = aws_db_instance.main.endpoint

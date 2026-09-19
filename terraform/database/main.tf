@@ -16,7 +16,8 @@ resource "aws_db_instance" "main" {
   username = var.db_username
   
   # Manage passwords with AWS secret manager
-  manage_master_user_password = true
+  manage_master_user_password = true   # Use RDS managed password
+  master_user_secret_kms_key_id = var.key_arn # Use CMK to encrypt credentials instead of AWS managed key
 
   # Network & Security boundaries
   db_subnet_group_name   = var.db_subnet_group_name
