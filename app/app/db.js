@@ -55,3 +55,36 @@ module.exports = {
     initializeDatabase,
     query: (text, params) => pool.query(text, params)
 };
+
+/*
+// ... existing initializeDatabase function ...
+module.exports = {
+    initializeDatabase,
+    
+    // Replace the simple query export with this self-healing wrapper
+    query: async (text, params) => {
+        try {
+            // Attempt the query normally
+            return await pool.query(text, params);
+        } catch (error) {
+            // Check if the error is due to an expired/rotated password
+            if (error.code === '28P01') {
+                console.warn("Database password rejected. Secret may have rotated. Rebuilding pool...");
+                
+                // 1. Drain the old pool to prevent memory leaks
+                await pool.end().catch(e => console.error("Error draining old pool", e));
+                
+                // 2. Fetch the new secret and rebuild the pool
+                await initializeDatabase();
+                
+                // 3. Retry the exact same query with the new credentials
+                console.log("Pool rebuilt. Retrying query...");
+                return await pool.query(text, params);
+            }
+            
+            // If it's a standard SQL syntax error or missing table, throw it normally
+            throw error;
+        }
+    }
+};
+*/

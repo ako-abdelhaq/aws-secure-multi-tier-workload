@@ -1,9 +1,9 @@
 module "network" {
   source = "./network"
 
+  project_prefix     = var.project_prefix
   vpc_cidr           = var.vpc_cidr
   availability_zones = var.availability_zones
-  project_prefix     = var.project_prefix
 }
 
 module "security" {
@@ -67,3 +67,7 @@ module "compute" {
 
 }
 
+module "cloudtrail" {
+  source = "./cloudtrail"
+  project_prefix        = var.project_prefix
+}

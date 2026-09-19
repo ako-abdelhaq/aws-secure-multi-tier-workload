@@ -32,7 +32,7 @@ start_time=$SECONDS
 while ! aws s3 cp s3://${artifact_bucket}/release/app-v1.tar.gz /opt/app; do
   elapsed=$(( SECONDS - start_time ))
   if [ $elapsed -ge $timeout_seconds ]; then
-    echo "Timeout of ${timeout_seconds} s reached. Aborting."
+    echo "Timeout of $${timeout_seconds} s reached. Aborting."
     exit 1
   fi
   
