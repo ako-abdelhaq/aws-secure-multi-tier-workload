@@ -33,3 +33,11 @@ resource "aws_db_instance" "main" {
     Tier = "Database"
   }
 }
+
+resource "aws_secretsmanager_secret_rotation" "db_password_rotation" {
+  secret_id = aws_db_instance.main.master_user_secret[0].secret_arn
+
+  rotation_rules {
+    automatically_after_days = 30 # Change the duration here (e.g., every 30 days)
+  }
+}

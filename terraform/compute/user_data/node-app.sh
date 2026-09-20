@@ -26,6 +26,7 @@ chown root:ec2-user /etc/default/node-app
 
 # The Wait Loop: Wait for the developer to upload the artifact to S3
 echo "Waiting for app artifact to appear in S3..."
+echo "file_name: ${artifact_bucket}/release/app-v1.tar.gz"
 
 timeout_seconds=1500  # Trying to grab artifacts for 25 minutes 
 start_time=$SECONDS

@@ -34,7 +34,7 @@ output "db_secret_arn" {
 }
 
 output "artifact_bucket_name" {
-  description = "S3 bucket for application release bundles"
+  description = "S3 bucket for application release bundles (Artifactory)"
   value       = module.compute.artifact_bucket_name
 }
 
