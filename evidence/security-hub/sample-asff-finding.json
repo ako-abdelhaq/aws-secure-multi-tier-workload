@@ -1,0 +1,117 @@
+{
+    "Findings": [
+        {
+            "SchemaVersion": "2018-10-08",
+            "Id": "arn:aws:guardduty:eu-west-3:9987654321098:detector/6a2f27001b1a45117afc77dc6c18f6be/finding/fad05f6c416edee305335532ad217c60",
+            "ProductArn": "arn:aws:securityhub:eu-west-3::product/aws/guardduty",
+            "ProductName": "GuardDuty",
+            "CompanyName": "Amazon",
+            "Region": "eu-west-3",
+            "GeneratorId": "arn:aws:guardduty:eu-west-3:9987654321098:detector/6a2f27001b1a45117afc77dc6c18f6be",
+            "AwsAccountId": "9987654321098",
+            "Types": [
+                "TTPs/Policy:IAMUser-RootCredentialUsage"
+            ],
+            "FirstObservedAt": "2026-09-20T12:37:38.000Z",
+            "LastObservedAt": "2026-09-20T21:08:24.000Z",
+            "CreatedAt": "2026-09-20T12:44:15.453Z",
+            "UpdatedAt": "2026-09-20T21:13:52.861Z",
+            "Severity": {
+                "Product": 2.0,
+                "Label": "LOW",
+                "Normalized": 40
+            },
+            "Title": "The API GetFindings was invoked using root credentials.",
+            "Description": "The API GetFindings was invoked using root credentials from IP address 41.115.108.124.",
+            "SourceUrl": "https://eu-west-3.console.aws.amazon.com/guardduty/home?region=eu-west-3#/findings?macros=current&fId=fad05f6c416edee305335532ad217c60",
+            "ProductFields": {
+                "aws/guardduty/service/action/actionType": "AWS_API_CALL",
+                "aws/guardduty/service/action/awsApiCallAction/affectedResources": "",
+                "aws/guardduty/service/action/awsApiCallAction/api": "GetFindings",
+                "aws/guardduty/service/action/awsApiCallAction/callerType": "Remote IP",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/city/cityName": "Mostaganem",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/country/countryName": "Algeria",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/geoLocation/lat": "33.9164",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/geoLocation/lon": "2.5379",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/ipAddressV4": "41.115.108.124",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/organization/asn": "36947",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/organization/asnOrg": "Telecom Algeria",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/organization/isp": "Algerie Telecom",
+                "aws/guardduty/service/action/awsApiCallAction/remoteIpDetails/organization/org": "Algerie Telecom",
+                "aws/guardduty/service/action/awsApiCallAction/serviceName": "securityhub.amazonaws.com",
+                "aws/guardduty/service/additionalInfo/value": "",
+                "aws/guardduty/service/additionalInfo/type": "default",
+                "aws/guardduty/service/archived": "false",
+                "aws/guardduty/service/count": "917",
+                "aws/guardduty/service/detectorId": "6a2f27001b1a45117afc77dc6c18f6be",
+                "aws/guardduty/service/eventFirstSeen": "2026-09-20T12:37:38.000Z",
+                "aws/guardduty/service/eventLastSeen": "2026-09-20T21:08:24.000Z",
+                "aws/guardduty/service/featureName": "CloudTrailManagementEvent",
+                "aws/guardduty/service/resourceRole": "TARGET",
+                "aws/guardduty/service/serviceName": "guardduty",
+                "aws/securityhub/FindingId": "arn:aws:securityhub:eu-west-3::product/aws/guardduty/arn:aws:guardduty:eu-west-3:9987654321098:detector/6a2f27001b1a45117afc77dc6c18f6be/finding/fad05f6c416edee305335532ad217c60",
+                "aws/securityhub/ProductName": "GuardDuty",
+                "aws/securityhub/CompanyName": "Amazon"
+            },
+            "Resources": [
+                {
+                    "Type": "AwsIamAccessKey",
+                    "Id": "AWS::IAM::AccessKey:AKIAEXAMPLE123456789",
+                    "Partition": "aws",
+                    "Region": "eu-west-3",
+                    "Details": {
+                        "AwsIamAccessKey": {
+                            "PrincipalId": "9987654321098",
+                            "PrincipalType": "Root",
+                            "PrincipalName": "Root"
+                        }
+                    }
+                }
+            ],
+            "WorkflowState": "NEW",
+            "Workflow": {
+                "Status": "NEW"
+            },
+            "RecordState": "ACTIVE",
+            "Action": {
+                "ActionType": "AWS_API_CALL",
+                "AwsApiCallAction": {
+                    "Api": "GetFindings",
+                    "ServiceName": "securityhub.amazonaws.com",
+                    "CallerType": "remoteIp",
+                    "RemoteIpDetails": {
+                        "IpAddressV4": "41.115.108.124",
+                        "Organization": {
+                            "Asn": 36947,
+                            "AsnOrg": "Telecom Algeria",
+                            "Isp": "Algerie Telecom",
+                            "Org": "Algerie Telecom"
+                        },
+                        "Country": {
+                            "CountryCode": "DZ",
+                            "CountryName": "Algeria"
+                        },
+                        "City": {
+                            "CityName": "Mostaganem"
+                        },
+                        "GeoLocation": {
+                            "Lon": 2.5379,
+                            "Lat": 33.9164
+                        }
+                    }
+                }
+            },
+            "FindingProviderFields": {
+                "Severity": {
+                    "Label": "LOW"
+                },
+                "Types": [
+                    "TTPs/Policy:IAMUser-RootCredentialUsage"
+                ]
+            },
+            "Sample": false,
+            "ProcessedAt": "2026-09-20T21:16:47.234Z"
+        }
+    ],
+    "NextToken": "eyJOZXh0VG5rZW4iOiBudWxsLCAiYm87b190cnVuY2F0ZV9vbW71bnQiOeAxfQ=="
+}
