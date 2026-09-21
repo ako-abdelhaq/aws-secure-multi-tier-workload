@@ -81,3 +81,11 @@ module "securityhub" {
   source = "./security-hub"
   project_prefix = var.project_prefix
 }
+
+/*
+module "config" {
+  source = "./config"
+  project_prefix = var.project_prefix
+  logging_bucket = module.cloudtrail.logging_bucket_name
+}
+*/
