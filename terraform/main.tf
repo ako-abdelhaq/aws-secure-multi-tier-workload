@@ -72,7 +72,6 @@ module "cloudtrail" {
   project_prefix        = var.project_prefix
 }
 
-
 module "guardduty" {
   source = "./guardduty"
   project_prefix        = var.project_prefix
