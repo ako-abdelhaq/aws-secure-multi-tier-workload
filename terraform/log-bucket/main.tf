@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "logging" {
   # force_destroy = true allows Terraform to delete the bucket even if it contains logs.
   # Remove this line for actual production environments to prevent accidental audit loss.
   force_destroy = true 
-  tags = { Name = "${var.project_prefix}-logging" }
+  tags = { Name = "${var.project_prefix}-logging-hub" }
 }
 
 # 3. Block All Public Access (Security Best Practice)
@@ -52,7 +52,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "logging" {
 }
 
 # 6. Mandatory Bucket Policy to allow CloudTrail to write logs
-resource "aws_s3_bucket_policy" "cloudtrail_logging_policy" {
+resource "aws_s3_bucket_policy" "logging_bucket_policy" {
   bucket = aws_s3_bucket.logging.id
 
   policy = jsonencode({

@@ -1,6 +1,6 @@
 resource "aws_cloudtrail" "main_audit_trail" {
   name                          = "workload-audit-trail"
-  s3_bucket_name                = aws_s3_bucket.logging.id
+  s3_bucket_name                = var.logging_bucket_name
   
   # 1. Multi-Region Tracking
   # Captures API calls across all AWS regions, preventing attackers from 
@@ -26,6 +26,6 @@ resource "aws_cloudtrail" "main_audit_trail" {
   # Terraform must finish applying the S3 Bucket Policy BEFORE it creates the trail, 
   # otherwise AWS CloudTrail will fail its initial bucket write-access check.
   depends_on = [
-    aws_s3_bucket_policy.cloudtrail_logging_policy
+    var.logging_bucket_policy
   ]
 }

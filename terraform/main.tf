@@ -67,18 +67,29 @@ module "compute" {
 
 }
 
+module "log-bucket" {
+  source = "./log-bucket"
+
+  project_prefix = var.project_prefix
+}
+
 module "cloudtrail" {
   source = "./cloudtrail"
+
   project_prefix        = var.project_prefix
+  logging_bucket_name   = module.log-bucket.logging_bucket_name
+  logging_bucket_policy = module.log-bucket.logging_bucket_policy
 }
 
 module "guardduty" {
   source = "./guardduty"
+
   project_prefix        = var.project_prefix
 }
 
 module "securityhub" {
   source = "./security-hub"
+
   project_prefix = var.project_prefix
 }
 
@@ -86,6 +97,6 @@ module "securityhub" {
 module "config" {
   source = "./config"
   project_prefix = var.project_prefix
-  logging_bucket = module.cloudtrail.logging_bucket_name
+  logging_bucket = 
 }
 */

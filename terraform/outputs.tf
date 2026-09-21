@@ -40,5 +40,5 @@ output "artifact_bucket_name" {
 
 output "logging_bucket_name" {
   description = "S3 bucket for CloudTrail and Config logs"
-  value       = module.cloudtrail.logging_bucket_name
+  value       = module.log-bucket.logging_bucket_name
 }
