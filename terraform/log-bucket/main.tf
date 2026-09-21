@@ -51,13 +51,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "logging" {
   }
 }
 
-# 6. Mandatory Bucket Policy to allow CloudTrail to write logs
+# 6. Mandatory Bucket Policy to allow CloudTrail and Config to write logs
 resource "aws_s3_bucket_policy" "logging_bucket_policy" {
   bucket = aws_s3_bucket.logging.id
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      # CloudTrail permissions:
       # 1. Service ACL Check: Allow CloudTrail to verify bucket ownership
       {
         Sid    = "AWSCloudTrailAclCheck"
@@ -69,11 +70,11 @@ resource "aws_s3_bucket_policy" "logging_bucket_policy" {
         Resource = aws_s3_bucket.logging.arn
         Condition = {
           StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id,
             "aws:SourceArn" = "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:trail/workload-audit-trail"
           }
         }
       },
-      
       # 2. Log Delivery: Allow CloudTrail to write logs specifically for this account/trail
       {
         Sid    = "AWSCloudTrailWrite"
@@ -86,12 +87,49 @@ resource "aws_s3_bucket_policy" "logging_bucket_policy" {
         Condition = {
           StringEquals = {
             "s3:x-amz-acl"  = "bucket-owner-full-control",
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id,
             "aws:SourceArn" = "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:trail/workload-audit-trail"
           }
         }
       },
-      
-      # 3. Enforce TLS / HTTPS Only: Deny all unencrypted S3 requests
+
+      # Config permissions:
+      # 1. Service ACL Check: Allow Config to verify bucket ownership
+      {
+        Sid       = "AllowConfigBucketAcl"
+        Effect    = "Allow"
+        Principal = { 
+          Service = "config.amazonaws.com" 
+        }
+        Action    = "s3:GetBucketAcl"
+        Resource  = aws_s3_bucket.logging.arn
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+          # No SourceARN as in initial API call, the AWS Config backend does not populate the aws:SourceArn (refer to AWS documentation for more details)
+        }
+      },
+      # 2. Log Delivery: Allow Config to write logs
+      {
+        Sid       = "AllowConfigPutObject"
+        Effect    = "Allow"
+        Principal = { Service = "config.amazonaws.com" }
+        Action    = "s3:PutObject"
+        # Notice the path: Root AWSLogs -> Account ID -> Config
+        Resource  = "${aws_s3_bucket.logging.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/Config/*"
+        Condition = {
+          StringEquals = { 
+            "s3:x-amz-acl" = "bucket-owner-full-control",
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          },
+          ArnLike = {
+            "aws:SourceArn" = "arn:aws:config:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+          }
+        }
+      },
+
+      #Enforce TLS / HTTPS Only: Deny all unencrypted S3 requests
       {
         Sid    = "EnforceTLS"
         Effect = "Deny"

@@ -37,7 +37,7 @@ aws s3 ls s3://sec-app-logging-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-wes
 # Then look for the file with time directly after the eventTime of the triggered event
 
 # Grab the log file containing the record (Follow the command but change the log file with the appropriate one)
-aws s3 cp s3://sec-app-logging-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/2026/09/19/<LOG_FILENAME>.json.gz ./test_log.gz
+aws s3 cp s3://sec-app-logging-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/$year/$month/$day/<LOG_FILENAME>.json.gz ./test_log.gz
 
 zcat ./test_log.gz | grep "PutBucketTagging"
 # Look at the output and look for the log with eventName "PutBucketTagging" and the following tagging under requestParameters
