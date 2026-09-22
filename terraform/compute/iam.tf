@@ -44,25 +44,33 @@ resource "aws_iam_role_policy_attachment" "app_ssm" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-/*
-# App-Only: Secrets Manager Read Policy
-resource "aws_iam_role_policy" "app_secrets_read" {
-  name = "app-secrets-read"
-  role = aws_iam_role.app_role.name
+
+# S3 Read Policy
+resource "aws_iam_policy" "s3_artifacts_read" {
+  name = "AppTierArtifactsRead"
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
         Effect   = "Allow"
-        Action   = ["secretsmanager:GetSecretValue"]
-        Resource = var.db_secret_arn
+        Action   = ["s3:GetObject", "s3:ListBucket"]
+        Resource = [
+          aws_s3_bucket.artifacts.arn,
+          "${aws_s3_bucket.artifacts.arn}/*"
+        ]
       }
     ]
   })
 }
-*/
+# Attach this policy to the App Tier's IAM Role
+resource "aws_iam_role_policy_attachment" "s3_artifacts_read_attach" {
+  role       = aws_iam_role.app_role.name
+  policy_arn = aws_iam_policy.s3_artifacts_read.arn
+}
 
+
+# Secrets and KMS policy
 resource "aws_iam_policy" "app_secrets_policy" {
   name        = "AppTierSecretsAccess"
   description = "Allow Node.js to fetch and decrypt the RDS managed secret"
