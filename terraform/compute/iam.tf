@@ -31,7 +31,7 @@ resource "aws_iam_instance_profile" "web_profile" {
 
 
 # -------------------------------------------------------------
-# APP TIER ROLE (SSM + S3 Artifacts + Secrets Manager)
+# APP TIER ROLE (SSM + S3 Artifacts + Secrets Manager + KMS)
 # -------------------------------------------------------------
 resource "aws_iam_role" "app_role" {
   name               = "app-instance-role"
@@ -44,7 +44,7 @@ resource "aws_iam_role_policy_attachment" "app_ssm" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-
+/*
 # App-Only: Secrets Manager Read Policy
 resource "aws_iam_role_policy" "app_secrets_read" {
   name = "app-secrets-read"
@@ -61,6 +61,7 @@ resource "aws_iam_role_policy" "app_secrets_read" {
     ]
   })
 }
+*/
 
 resource "aws_iam_policy" "app_secrets_policy" {
   name        = "AppTierSecretsAccess"

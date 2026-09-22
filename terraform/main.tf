@@ -87,7 +87,7 @@ module "guardduty" {
   project_prefix        = var.project_prefix
 }
 
-module "securityhub" {
+module "security-hub" {
   source = "./security-hub"
 
   project_prefix = var.project_prefix

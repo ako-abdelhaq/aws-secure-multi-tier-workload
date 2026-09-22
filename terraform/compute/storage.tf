@@ -26,7 +26,7 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
   restrict_public_buckets = true
 }
 
-# Attach S3 Read Policy to EC2 Shared Role
+# Attach S3 Read Policy to tha App EC2 instance Role
 resource "aws_iam_role_policy" "s3_artifact_read" {
   name = "${var.project_prefix}-s3-artifact-read"
   role = aws_iam_role.app_role.name
