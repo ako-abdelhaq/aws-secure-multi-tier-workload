@@ -1,45 +1,5 @@
 # -------------------------------------------------------------------------
-# 1. IAM Role: ConfigRemediationRole
-# -------------------------------------------------------------------------
-resource "aws_iam_role" "config_remediation_role" {
-  name = "ConfigRemediationRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "ssm.amazonaws.com"
-        }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
-}
-
-# Grant SSM permissions to describe and modify Security Groups
-resource "aws_iam_role_policy" "config_remediation_policy" {
-  name = "ConfigRemediationPolicy"
-  role = aws_iam_role.config_remediation_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "ec2:RevokeSecurityGroupIngress",
-          "ec2:DescribeSecurityGroups"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
-}
-
-# -------------------------------------------------------------------------
-# 2. Config Remediation Configuration
+# AWS Config Remediation Configuration
 # -------------------------------------------------------------------------
 resource "aws_config_remediation_configuration" "remediate_ssh" {
   config_rule_name = aws_config_config_rule.restricted_ssh.name
