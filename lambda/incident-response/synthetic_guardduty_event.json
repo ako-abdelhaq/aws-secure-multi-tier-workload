@@ -1,0 +1,27 @@
+{
+  "version": "0",
+  "id": "e6b726bf-7e3e-4b67-897f-1d89e5a1b321",
+  "detail-type": "GuardDuty Finding",
+  "source": "aws.guardduty",
+  "account": "123456789012",
+  "time": "2026-09-22T14:00:00Z",
+  "region": "us-east-1",
+  "resources": [],
+  "detail": {
+    "schemaVersion": "2.0",
+    "accountId": "123456789012",
+    "region": "us-east-1",
+    "type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS",
+    "id": "finding-test-uuid-98765",
+    "severity": 8.0,
+    "resource": {
+      "resourceType": "AccessKey",
+      "accessKeyDetails": {
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+        "principalId": "AIDAJ45Q7YFFAREXAMPLE",
+        "userName": "test-compromised-user",
+        "userType": "IAMUser"
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+	{"timestamp": "2026-09-22T15:27:04.379500+00:00", "findingId": "f4967016-da62-ece7-3df7-aeaa0f170c17", "findingType": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS", "severity": 8.0, "targetPrincipal": "test-compromised-user", "targetAccessKey": "AKIAEXAMPLE123456789", "containmentAction": "DeactivateAccessKey", "executionStatus": "SUCCESS"}

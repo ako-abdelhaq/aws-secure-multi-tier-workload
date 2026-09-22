@@ -95,6 +95,13 @@ module "security-hub" {
 
 module "config" {
   source = "./config"
+  
   project_prefix = var.project_prefix
   logging_bucket_name = module.log-bucket.logging_bucket_name
+}
+
+module "lambda" {
+  source = "./lambda"
+
+  environment = var.environment
 }
