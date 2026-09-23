@@ -1,0 +1,462 @@
+2026-09-23T12:08:30.157000+00:00 eu-west-3_sec-app-alb-regional-waf_0 
+{
+    "timestamp": 1790165310157,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:eu-west-3:123456789012:regional/webacl/sec-app-alb-regional-waf/b31bed1d-3a7e-4289-9ca5-f2e79c28849b",
+    "terminatingRuleId": "Default_Action",
+    "terminatingRuleType": "REGULAR",
+    "action": "ALLOW",
+    "terminatingRuleMatchDetails": [],
+    "httpSourceName": "ALB",
+    "httpSourceId": "123456789012-app/sec-app-alb/7f3d57abc8c4abb8",
+    "ruleGroupList": [
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesUnixRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        }
+    ],
+    "rateBasedRuleList": [],
+    "nonTerminatingMatchingRules": [],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+        "clientIp": "195.63.16.169",
+        "country": "CA",
+        "headers": [
+            {
+                "name": "Host",
+                "value": "13.39.219.113"
+            },
+            {
+                "name": "User-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.140 Safari/537.36"
+            },
+            {
+                "name": "Accept-Encoding",
+                "value": "gzip, deflate"
+            },
+            {
+                "name": "Accept",
+                "value": "*/*"
+            },
+            {
+                "name": "Connection",
+                "value": "keep-alive"
+            }
+        ],
+        "uri": "/.env",
+        "args": "",
+        "httpVersion": "HTTP/1.1",
+        "httpMethod": "GET",
+        "requestId": "1-6ab3c13e-36b2b2316b4ad73b59cfca94",
+        "fragment": "",
+        "scheme": "http",
+        "host": "13.39.219.113"
+    }
+}
+2026-09-23T12:08:30.418000+00:00 eu-west-3_sec-app-alb-regional-waf_0 
+{
+    "timestamp": 1790165310418,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:eu-west-3:123456789012:regional/webacl/sec-app-alb-regional-waf/b31bed1d-3a7e-4289-9ca5-f2e79c28849b",
+    "terminatingRuleId": "Default_Action",
+    "terminatingRuleType": "REGULAR",
+    "action": "ALLOW",
+    "terminatingRuleMatchDetails": [],
+    "httpSourceName": "ALB",
+    "httpSourceId": "123456789012-app/sec-app-alb/7f3d57abc8c4abb8",
+    "ruleGroupList": [
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesUnixRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        }
+    ],
+    "rateBasedRuleList": [],
+    "nonTerminatingMatchingRules": [],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+        "clientIp": "195.63.29.145",
+        "country": "NL",
+        "headers": [
+            {
+                "name": "Host",
+                "value": "13.39.219.113"
+            },
+            {
+                "name": "User-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.140 Safari/537.36"
+            },
+            {
+                "name": "Accept-Encoding",
+                "value": "gzip, deflate"
+            },
+            {
+                "name": "Accept",
+                "value": "*/*"
+            },
+            {
+                "name": "Content-Length",
+                "value": "20"
+            },
+            {
+                "name": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+            },
+            {
+                "name": "Connection",
+                "value": "keep-alive"
+            }
+        ],
+        "uri": "/",
+        "args": "",
+        "httpVersion": "HTTP/1.1",
+        "httpMethod": "POST",
+        "requestId": "1-6ab3c13e-4258d818613d54d3239de240",
+        "fragment": "",
+        "scheme": "http",
+        "host": "13.39.219.113"
+    },
+    "requestBodySize": 20,
+    "requestBodySizeInspectedByWAF": 20
+}
+2026-09-23T12:13:33.338000+00:00 eu-west-3_sec-app-alb-regional-waf_0 
+{
+    "timestamp": 1790165613338,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:eu-west-3:123456789012:regional/webacl/sec-app-alb-regional-waf/b31bed1d-3a7e-4289-9ca5-f2e79c28849b",
+    "terminatingRuleId": "AWSManagedRulesSQLiRuleSet",
+    "terminatingRuleType": "MANAGED_RULE_GROUP",
+    "action": "BLOCK",
+    "terminatingRuleMatchDetails": [
+        {
+            "conditionType": "SQL_INJECTION",
+            "location": "ALL_QUERY_ARGS",
+            "matchedData": [
+                "1",
+                "OR",
+                "1",
+                "=",
+                "1"
+            ],
+            "matchedFieldName": "id",
+            "sensitivityLevel": "LOW"
+        }
+    ],
+    "httpSourceName": "ALB",
+    "httpSourceId": "123456789012-app/sec-app-alb/7f3d57abc8c4abb8",
+    "ruleGroupList": [
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+            "terminatingRule": {
+                "ruleId": "SQLi_QUERYARGUMENTS",
+                "action": "BLOCK",
+                "ruleMatchDetails": null
+            },
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        }
+    ],
+    "rateBasedRuleList": [],
+    "nonTerminatingMatchingRules": [],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+        "clientIp": "41.104.181.147",
+        "country": "DZ",
+        "headers": [
+            {
+                "name": "Host",
+                "value": "sec-app-alb-921962196.eu-west-3.elb.amazonaws.com"
+            },
+            {
+                "name": "User-Agent",
+                "value": "curl/8.18.0"
+            },
+            {
+                "name": "Accept",
+                "value": "*/*"
+            }
+        ],
+        "uri": "/products",
+        "args": "id=1%27%20OR%20%271%27=%271",
+        "httpVersion": "HTTP/1.1",
+        "httpMethod": "GET",
+        "requestId": "1-6ab3c26d-746c306234cd864623c7b81d",
+        "fragment": "",
+        "scheme": "http",
+        "host": "sec-app-alb-921962196.eu-west-3.elb.amazonaws.com"
+    },
+    "labels": [
+        {
+            "name": "awswaf:managed:aws:sql-database:SQLi_QueryArguments"
+        }
+    ]
+}
+2026-09-23T12:16:23.383000+00:00 eu-west-3_sec-app-alb-regional-waf_0 
+{
+    "timestamp": 1790165783383,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:eu-west-3:123456789012:regional/webacl/sec-app-alb-regional-waf/b31bed1d-3a7e-4289-9ca5-f2e79c28849b",
+    "terminatingRuleId": "Default_Action",
+    "terminatingRuleType": "REGULAR",
+    "action": "ALLOW",
+    "terminatingRuleMatchDetails": [],
+    "httpSourceName": "ALB",
+    "httpSourceId": "123456789012-app/sec-app-alb/7f3d57abc8c4abb8",
+    "ruleGroupList": [
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesUnixRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        }
+    ],
+    "rateBasedRuleList": [],
+    "nonTerminatingMatchingRules": [],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+        "clientIp": "193.24.123.123",
+        "country": "RU",
+        "headers": [
+            {
+                "name": "Host",
+                "value": "13.39.219.113"
+            },
+            {
+                "name": "User-Agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            },
+            {
+                "name": "Accept",
+                "value": "text/html"
+            },
+            {
+                "name": "Connection",
+                "value": "close"
+            }
+        ],
+        "uri": "/",
+        "args": "",
+        "httpVersion": "HTTP/1.1",
+        "httpMethod": "GET",
+        "requestId": "1-6ab3c317-3f075b7a3362bf866fea35aa",
+        "fragment": "",
+        "scheme": "http",
+        "host": "13.39.219.113"
+    }
+}
+2026-09-23T12:17:34.092000+00:00 eu-west-3_sec-app-alb-regional-waf_0 
+{
+    "timestamp": 1790165854092,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:eu-west-3:123456789012:regional/webacl/sec-app-alb-regional-waf/b31bed1d-3a7e-4289-9ca5-f2e79c28849b",
+    "terminatingRuleId": "Default_Action",
+    "terminatingRuleType": "REGULAR",
+    "action": "ALLOW",
+    "terminatingRuleMatchDetails": [],
+    "httpSourceName": "ALB",
+    "httpSourceId": "123456789012-app/sec-app-alb/7f3d57abc8c4abb8",
+    "ruleGroupList": [
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesUnixRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        }
+    ],
+    "rateBasedRuleList": [],
+    "nonTerminatingMatchingRules": [],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+        "clientIp": "217.181.74.4",
+        "country": "US",
+        "headers": [
+            {
+                "name": "Host",
+                "value": "15.237.71.123"
+            },
+            {
+                "name": "User-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.140 Safari/537.36"
+            },
+            {
+                "name": "Accept-Encoding",
+                "value": "gzip, deflate"
+            },
+            {
+                "name": "Accept",
+                "value": "*/*"
+            },
+            {
+                "name": "Connection",
+                "value": "keep-alive"
+            }
+        ],
+        "uri": "/.env",
+        "args": "",
+        "httpVersion": "HTTP/1.1",
+        "httpMethod": "GET",
+        "requestId": "1-6ab3c35e-57d65b9c6fde86f70035155e",
+        "fragment": "",
+        "scheme": "http",
+        "host": "15.237.71.123"
+    }
+}
+2026-09-23T12:17:34.528000+00:00 eu-west-3_sec-app-alb-regional-waf_0 
+{
+    "timestamp": 1790165854528,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:eu-west-3:123456789012:regional/webacl/sec-app-alb-regional-waf/b31bed1d-3a7e-4289-9ca5-f2e79c28849b",
+    "terminatingRuleId": "Default_Action",
+    "terminatingRuleType": "REGULAR",
+    "action": "ALLOW",
+    "terminatingRuleMatchDetails": [],
+    "httpSourceName": "ALB",
+    "httpSourceId": "123456789012-app/sec-app-alb/7f3d57abc8c4abb8",
+    "ruleGroupList": [
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        },
+        {
+            "ruleGroupId": "AWS#AWSManagedRulesUnixRuleSet",
+            "terminatingRule": null,
+            "nonTerminatingMatchingRules": [],
+            "excludedRules": null,
+            "customerConfig": null
+        }
+    ],
+    "rateBasedRuleList": [],
+    "nonTerminatingMatchingRules": [],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+        "clientIp": "217.181.66.254",
+        "country": "US",
+        "headers": [
+            {
+                "name": "Host",
+                "value": "15.237.71.123"
+            },
+            {
+                "name": "User-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.140 Safari/537.36"
+            },
+            {
+                "name": "Accept-Encoding",
+                "value": "gzip, deflate"
+            },
+            {
+                "name": "Accept",
+                "value": "*/*"
+            },
+            {
+                "name": "Content-Length",
+                "value": "20"
+            },
+            {
+                "name": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+            },
+            {
+                "name": "Connection",
+                "value": "keep-alive"
+            }
+        ],
+        "uri": "/",
+        "args": "",
+        "httpVersion": "HTTP/1.1",
+        "httpMethod": "POST",
+        "requestId": "1-6ab3c35e-6eaf31b922131bdf54a850ce",
+        "fragment": "",
+        "scheme": "http",
+        "host": "15.237.71.123"
+    },
+    "requestBodySize": 20,
+    "requestBodySizeInspectedByWAF": 20
+}

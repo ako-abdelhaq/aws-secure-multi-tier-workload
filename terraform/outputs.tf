@@ -23,6 +23,11 @@ output "alb_dns_name" {
   value       = module.alb.alb_dns_name
 }
 
+output "alb_arn" {
+  description = "The ARN of the ALB."
+  value = module.alb.alb_arn
+}
+
 output "db_endpoint" {
   description = "The private connection endpoint for the RDS database."
   value       = module.database.db_endpoint
@@ -41,4 +46,19 @@ output "artifact_bucket_name" {
 output "logging_bucket_name" {
   description = "S3 bucket for CloudTrail and Config logs"
   value       = module.log-bucket.logging_bucket_name
+}
+
+output "waf_arn" {
+  description = "The ARN of the WAF"
+  value = module.waf.waf_arn
+}
+
+output "waf_id" {
+  description = "WAF ID"
+  value = module.waf.waf_id
+}
+
+output "waf_name" {
+  description = "The name of the WAF"
+  value = module.waf.waf_name
 }

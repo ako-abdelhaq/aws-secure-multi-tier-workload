@@ -27,6 +27,8 @@ async function initDB() {
   console.log("Database successfully initialized!");
 }
 
+app.use(express.json());
+
 // Initialize the DB securely first
 db.initializeDatabase().then(() => {
 
@@ -76,7 +78,7 @@ db.initializeDatabase().then(() => {
         return res.status(400).json({ error: 'Price must be a valid number' });
       }
 
-      const result = await pool.query(
+      const result = await db.query(
         'INSERT INTO products (name, price) VALUES ($1, $2) RETURNING id, name, price;',
         [name, price]
       );

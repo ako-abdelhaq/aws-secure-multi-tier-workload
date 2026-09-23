@@ -1,0 +1,29 @@
+[
+    {
+        "Request": {
+            "ClientIP": "41.104.181.145",
+            "Country": "DZ",
+            "URI": "/products?file=/etc/passwd",
+            "Method": "GET",
+            "HTTPVersion": "HTTP/1.1",
+            "Headers": [
+                {
+                    "Name": "Host",
+                    "Value": "sec-app-alb-921962196.eu-west-3.elb.amazonaws.com"
+                },
+                {
+                    "Name": "User-Agent",
+                    "Value": "curl/8.18.0"
+                },
+                {
+                    "Name": "Accept",
+                    "Value": "*/*"
+                }
+            ]
+        },
+        "Weight": 1,
+        "Timestamp": "2026-09-23T13:02:00.306000+02:00",
+        "Action": "BLOCK",
+        "RuleNameWithinRuleGroup": "AWS#AWSManagedRulesUnixRuleSet#UNIXShellCommandsVariables_QUERYSTRING"
+    }
+]

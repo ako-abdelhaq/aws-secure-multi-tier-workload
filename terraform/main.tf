@@ -105,3 +105,10 @@ module "lambda" {
 
   environment = var.environment
 }
+
+module "waf" {
+  source = "./waf"
+
+  project_prefix = var.project_prefix
+  alb_arn = module.alb.alb_arn
+}
