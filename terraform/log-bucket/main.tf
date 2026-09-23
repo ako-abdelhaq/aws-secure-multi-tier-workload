@@ -9,6 +9,7 @@ resource "aws_s3_bucket" "logging" {
   # force_destroy = true allows Terraform to delete the bucket even if it contains logs.
   # Remove this line for actual production environments to prevent accidental audit loss.
   force_destroy = true 
+  
   tags = { Name = "${var.project_prefix}-logging-hub" }
 }
 
