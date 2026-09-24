@@ -40,8 +40,7 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
 
 
 # -------------------------------------------------------------------------
-# 5. EventBridge Rule (The Tripwire)
-# -------------------------------------------------------------------------
+# EventBridge Rule (The Tripwire)
 resource "aws_cloudwatch_event_rule" "guardduty_iam_compromise" {
   name        = "GuardDuty-IAM-Credential-Compromise"
   description = "Triggers on IAM credential exfiltration findings from GuardDuty."

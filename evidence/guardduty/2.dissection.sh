@@ -1,3 +1,6 @@
+#!/bin/bash
+
+# Execute the script from the main directory
 set -e
 DETECTOR_ID=""
 
