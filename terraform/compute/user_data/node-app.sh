@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Install Node.js (this works because dnf fetches from Amazon Linux S3 mirrors natively)
 dnf update -y
 dnf install -y nodejs
@@ -22,13 +23,12 @@ EOF
 chmod 640 /etc/default/node-app
 chown root:ec2-user /etc/default/node-app
 
-#echo "begin looping" > ako-file.txt
-
 # The Wait Loop: Wait for the developer to upload the artifact to S3
 echo "Waiting for app artifact to appear in S3..."
 echo "file_name: ${artifact_bucket}/release/app-v1.tar.gz"
 
-timeout_seconds=1500  # Trying to grab artifacts for 25 minutes 
+# Trying to grab artifacts for 25 minutes 
+timeout_seconds=1500
 start_time=$SECONDS
 while ! aws s3 cp s3://${artifact_bucket}/release/app-v1.tar.gz /opt/app; do
   elapsed=$(( SECONDS - start_time ))
@@ -41,8 +41,6 @@ while ! aws s3 cp s3://${artifact_bucket}/release/app-v1.tar.gz /opt/app; do
   sleep 10
 done
 
-#echo "download complete" > final.txt
-
 # Extract and start the application
 tar -xzf app-v1.tar.gz
 chown -R ec2-user:ec2-user /opt/app
@@ -53,8 +51,8 @@ source /etc/default/node-app
 
 # Get the current AWS region dynamically from the EC2 metadata
 AWS_REGION=${aws_region}
-#echo $REGION >> final.txt
 
+# Use this portion if node-app works with env variables
 # Fetch the secure JSON payload from AWS Secrets Manager
 #SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id "$DB_SECRET_ARN" --region "$REGION" --query "SecretString" --output text)
 #echo $SECRET_JSON >> final.txt

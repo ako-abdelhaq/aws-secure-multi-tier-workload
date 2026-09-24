@@ -1,3 +1,6 @@
+#!/bin/bash
+
+# Get findings from security hub
 aws securityhub get-findings \
   --filters '{"ProductName":[{"Value": "GuardDuty","Comparison":"EQUALS"}]}' \
   --max-items 5 \

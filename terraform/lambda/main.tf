@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------------
-# 2. Package and Deploy the Lambda Function
-# -------------------------------------------------------------------------
+# Package and Deploy the Lambda Function
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_file = "../lambda/incident-response/iam_killswitch.py"
@@ -39,7 +37,6 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
 }
 
 
-# -------------------------------------------------------------------------
 # EventBridge Rule (The Tripwire)
 resource "aws_cloudwatch_event_rule" "guardduty_iam_compromise" {
   name        = "GuardDuty-IAM-Credential-Compromise"
@@ -61,18 +58,14 @@ resource "aws_cloudwatch_event_rule" "guardduty_iam_compromise" {
   })
 }
 
-# -------------------------------------------------------------------------
-# 6. EventBridge Target (The Router)
-# -------------------------------------------------------------------------
+# EventBridge Target (The Router)
 resource "aws_cloudwatch_event_target" "invoke_killswitch_lambda" {
   rule      = aws_cloudwatch_event_rule.guardduty_iam_compromise.name
   target_id = "Trigger-IAM-KillSwitch-Lambda"
   arn       = aws_lambda_function.iam_killswitch.arn
 }
 
-# -------------------------------------------------------------------------
-# 7. Lambda Resource Permission (The Authorization)
-# -------------------------------------------------------------------------
+# Lambda Resource Permission (The Authorization)
 resource "aws_lambda_permission" "allow_eventbridge" {
   statement_id  = "AllowExecutionFromEventBridge"
   action        = "lambda:InvokeFunction"

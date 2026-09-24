@@ -3,7 +3,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 
-// 1. Strict Configuration Verification (No silent fallbacks for credentials)
+// Strict Configuration Verification (No silent fallbacks for credentials)
 if (!process.env.DB_USER) {
   console.error('FATAL: DB_USER environment variable must be explicitly defined.');
   process.exit(1);
@@ -22,7 +22,7 @@ if (!process.env.DB_HOST) {
 const app = express();
 app.use(express.json());
 
-// 2. Database Connection Pool
+// Database Connection Pool
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -34,7 +34,7 @@ const pool = new Pool({
   idleTimeoutMillis: 30000
 });
 
-// 3. Schema Auto-Initialization
+// Schema Auto-Initialization
 async function initSchema() {
   const ddl = `
     CREATE TABLE IF NOT EXISTS products (
@@ -54,7 +54,7 @@ async function initSchema() {
 }
 initSchema();
 
-// 4. Endpoints Implementation
+// Endpoints Implementation
 
 // GET /health
 app.get('/health', (req, res) => {

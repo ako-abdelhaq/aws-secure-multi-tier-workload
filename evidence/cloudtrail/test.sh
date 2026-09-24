@@ -1,9 +1,11 @@
+#!/bin/bash
+
 # Use this from local machine
 
 # Verify that ClouTrail started logging
 aws cloudtrail get-trail-status --name workload-audit-trail
 
-# 1. Get your AWS Account ID dynamically
+# Get your AWS Account ID dynamically
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text 2>&1)
 
 if [ -z "$ACCOUNT_ID" ]; then
@@ -11,13 +13,12 @@ if [ -z "$ACCOUNT_ID" ]; then
     exit 1
 fi
 
-# 2. Trigger a 'PutBucketTagging' API event
+# Trigger a 'PutBucketTagging' API event
 aws s3api put-bucket-tagging \
   --bucket $LOGGING_BUCKET_NAME \
   --tagging 'TagSet=[{Key=TestEvent,Value="Ako Triggered"}]'
 
-# 3. Wait for CloudTrail delivery cycle (~5 minutes) then check CloudTrail for the triggered event
-
+# Wait for CloudTrail delivery cycle (~5 minutes) then check CloudTrail for the triggered event
 aws cloudtrail lookup-events \
   --lookup-attributes AttributeKey=EventName,AttributeValue=PutBucketTagging \
   --max-items 3
@@ -49,9 +50,7 @@ zcat ./test_log.gz | grep "PutBucketTagging"
 #    }
 zcat ./test_log.gz | grep "Ako Triggered"
 
-
-
-# 4. Cryptographic validation 
+# Cryptographic validation 
 # In this step we'll have to wait for about 1h for AWS t generate the digest files
 
 

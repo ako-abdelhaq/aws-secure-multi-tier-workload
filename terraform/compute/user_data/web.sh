@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 1. Install Nginx
+# Install Nginx
 dnf update -y
 dnf install -y nginx
 
@@ -10,7 +10,7 @@ sleep 5
 # Remove default welcome block if present
 rm -f /etc/nginx/conf.d/default.conf || true
 
-# 2. Write the Nginx config
+# Write the Nginx config
 # Note: Using 'EOF' with single quotes tells Bash to ignore the $ variables
 # so Nginx variables like $host aren't destroyed during boot.
 cat << 'EOF' > /etc/nginx/conf.d/app.conf
@@ -54,7 +54,7 @@ server {
 }
 EOF
 
-# 3. Clean up defaults and start Nginx
+# Clean up defaults and start Nginx
 rm -f /etc/nginx/sites-enabled/default
 rm -f /etc/nginx/conf.d/default.conf
 

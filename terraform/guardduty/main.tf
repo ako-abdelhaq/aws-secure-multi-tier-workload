@@ -6,13 +6,9 @@ resource "aws_guardduty_detector" "main_detector" {
   tags = {
     Name = "${var.project_prefix}-detector"
   }
-  
-  # Note: In Terraform, optional protection plans (like EKS, Lambda, 
-  # or S3 Malware Protection) are disabled by default unless explicitly 
-  # defined using the `aws_guardduty_detector_feature` resource.
-  # We will leave them disabled here to avoid unnecessary lab costs.
 }
 
+# Enable RDS Login Events
 resource "aws_guardduty_detector_feature" "rds_protection" {
   detector_id = aws_guardduty_detector.main_detector.id
   name        = "RDS_LOGIN_EVENTS"
@@ -43,7 +39,7 @@ resource "aws_guardduty_detector_feature" "ebs_malware" {
   status      = "DISABLED"
 }
 
-# Explicitly disable Lambda Network Logs
+# Explicitly disable Lambda Network Logs (VPC Flow Logs is sufficient for our architecture)
 resource "aws_guardduty_detector_feature" "lambda_protection" {
   detector_id = aws_guardduty_detector.main_detector.id
   name        = "LAMBDA_NETWORK_LOGS"

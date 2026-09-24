@@ -1,6 +1,4 @@
-# =========================================================
-# 1. BASE SECURITY GROUPS
-# =========================================================
+# BASE SECURITY GROUPS
 
 resource "aws_security_group" "alb" {
   name        = "${var.project_prefix}-alb-sg"
@@ -42,9 +40,7 @@ resource "aws_security_group" "vpc_endpoints" {
   tags = { Name = "${var.project_prefix}-endpoints-sg", Tier = "Security" }
 }
 
-# =========================================================
-# 2. ALB RULES (Internet Ingress -> Forward to Web)
-# =========================================================
+# ALB RULES (Internet Ingress -> Forward to Web)
 
 resource "aws_vpc_security_group_ingress_rule" "alb_http_in" {
   security_group_id = aws_security_group.alb.id
@@ -74,9 +70,7 @@ resource "aws_vpc_security_group_egress_rule" "alb_to_web" {
   ip_protocol                  = "tcp"
 }
 
-# =========================================================
-# 3. WEB TIER RULES (ALB Ingress Only)
-# =========================================================
+# WEB TIER RULES (ALB Ingress Only)
 
 resource "aws_vpc_security_group_ingress_rule" "web_from_alb" {
   security_group_id            = aws_security_group.web.id
@@ -106,10 +100,7 @@ resource "aws_vpc_security_group_egress_rule" "web_https_out" {
 }
 
 
-
-# =========================================================
-# 4. APP TIER RULES
-# =========================================================
+# APP TIER RULES
 
 resource "aws_vpc_security_group_ingress_rule" "app_from_web" {
   security_group_id            = aws_security_group.app.id
@@ -148,9 +139,7 @@ resource "aws_vpc_security_group_egress_rule" "app_outbound_https" {
 }
 
 
-# =========================================================
-# 5. DATABASE TIER RULES
-# =========================================================
+# DATABASE TIER RULES
 
 resource "aws_vpc_security_group_ingress_rule" "db_from_app" {
   security_group_id            = aws_security_group.db.id
@@ -161,9 +150,8 @@ resource "aws_vpc_security_group_ingress_rule" "db_from_app" {
   ip_protocol                  = "tcp"
 }
 
-# =========================================================
-# 6. VPC ENDPOINT RULES
-# =========================================================
+
+# VPC ENDPOINT RULES
 
 resource "aws_vpc_security_group_ingress_rule" "endpoints_from_app" {
   security_group_id            = aws_security_group.vpc_endpoints.id

@@ -1,6 +1,6 @@
 data "aws_region" "current" {}
 
-# 1. Enable the Security Hub Service in the account
+# Enable the Security Hub Service in the account
 resource "aws_securityhub_account" "main" {
   enable_default_standards = false
   # In a multi-account organization, you would configure an admin/member 
@@ -8,7 +8,7 @@ resource "aws_securityhub_account" "main" {
   # it at the local account level.
 }
 
-# 2. Subscribe to the AWS Foundational Security Best Practices (FSBP) standard
+# Subscribe to the AWS Foundational Security Best Practices (FSBP) standard
 resource "aws_securityhub_standards_subscription" "fsbp" {
   depends_on    = [aws_securityhub_account.main]
   standards_arn = "arn:aws:securityhub:${data.aws_region.current.name}::standards/aws-foundational-security-best-practices/v/1.0.0"

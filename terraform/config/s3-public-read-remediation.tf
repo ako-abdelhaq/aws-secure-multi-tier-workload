@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------------
 # S3 Remediation Configuration
-# -------------------------------------------------------------------------
 resource "aws_config_remediation_configuration" "remediate_s3_public_read" {
   config_rule_name = aws_config_config_rule.s3_public_read_prohibited.name
   target_type      = "SSM_DOCUMENT"

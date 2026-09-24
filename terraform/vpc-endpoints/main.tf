@@ -1,6 +1,7 @@
 # Dynamically fetch the current AWS region
 data "aws_region" "current" {}
 
+# Secrets manager endpoint
 resource "aws_vpc_endpoint" "secretsmanager" {
   vpc_id              = var.vpc_id
   service_name        = "com.amazonaws.${data.aws_region.current.name}.secretsmanager"
@@ -12,6 +13,7 @@ resource "aws_vpc_endpoint" "secretsmanager" {
   tags = { Name = "${var.project_prefix}-vpce-secretsmanager" }
 }
 
+# KMS endpoint
 resource "aws_vpc_endpoint" "kms" {
   vpc_id              = var.vpc_id
   service_name        = "com.amazonaws.${data.aws_region.current.name}.kms"
@@ -23,6 +25,7 @@ resource "aws_vpc_endpoint" "kms" {
   tags = { Name = "${var.project_prefix}-vpce-kms" }
 }
 
+# SSM endpoint
 resource "aws_vpc_endpoint" "ssm" {
   vpc_id              = var.vpc_id
   service_name        = "com.amazonaws.${data.aws_region.current.name}.ssm"
@@ -34,6 +37,7 @@ resource "aws_vpc_endpoint" "ssm" {
   tags = { Name = "${var.project_prefix}-vpce-ssm" }
 }
 
+# SSM messages 
 resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_id              = var.vpc_id
   service_name        = "com.amazonaws.${data.aws_region.current.name}.ssmmessages"
@@ -45,6 +49,7 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   tags = { Name = "${var.project_prefix}-vpce-ssmmessages" }
 }
 
+# EC2 messages
 resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id              = var.vpc_id
   service_name        = "com.amazonaws.${data.aws_region.current.name}.ec2messages"
@@ -56,6 +61,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
   tags = { Name = "${var.project_prefix}-vpce-ec2messages" }
 }
 
+# S3 endpoint
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = var.vpc_id
   service_name      = "com.amazonaws.${data.aws_region.current.name}.s3"

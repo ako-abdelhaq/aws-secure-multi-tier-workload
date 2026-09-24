@@ -4,6 +4,7 @@ set -e
 DETECTOR_ID=""
 
 echo "Searching for GuardDuty Detector tagged 'sec-app-detector'..."
+
 # Look up using ARN (in case you have multiple detectors)
 DETECTOR_ID=$(aws resourcegroupstaggingapi get-resources \
   --tag-filters Key=Name,Values=sec-app-detector \

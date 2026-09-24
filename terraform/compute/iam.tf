@@ -1,3 +1,4 @@
+# Assuming role by EC2 instances
 data "aws_iam_policy_document" "ec2_assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -8,10 +9,7 @@ data "aws_iam_policy_document" "ec2_assume_role" {
   }
 }
 
-
-# -------------------------------------------------------------
 # WEB TIER ROLE (Minimal: SSM Only)
-# -------------------------------------------------------------
 resource "aws_iam_role" "web_role" {
   name               = "web-instance-role"
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
@@ -29,10 +27,9 @@ resource "aws_iam_instance_profile" "web_profile" {
   role = aws_iam_role.web_role.name
 }
 
+#-----------------------------------------------------------------
 
-# -------------------------------------------------------------
 # APP TIER ROLE (SSM + S3 Artifacts + Secrets Manager + KMS)
-# -------------------------------------------------------------
 resource "aws_iam_role" "app_role" {
   name               = "app-instance-role"
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
@@ -63,7 +60,8 @@ resource "aws_iam_policy" "s3_artifacts_read" {
     ]
   })
 }
-# Attach this policy to the App Tier's IAM Role
+
+# Attach S3 Read policy to the App Tier's IAM Role
 resource "aws_iam_role_policy_attachment" "s3_artifacts_read_attach" {
   role       = aws_iam_role.app_role.name
   policy_arn = aws_iam_policy.s3_artifacts_read.arn
@@ -79,14 +77,15 @@ resource "aws_iam_policy" "app_secrets_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        # 1. Permission to fetch the secret payload
+        # Permission to fetch the secret payload
         Effect   = "Allow"
         Action   = "secretsmanager:GetSecretValue"
+
         # Reference the dynamically created secret from the RDS instance
         Resource = var.db_secret_arn
       },
       {
-        # 2. Permission to decrypt the payload using your CMK
+        # Permission to decrypt the payload using your CMK
         Effect   = "Allow"
         Action   = "kms:Decrypt"
         Resource = aws_kms_key.app_key.arn
@@ -95,7 +94,7 @@ resource "aws_iam_policy" "app_secrets_policy" {
   })
 }
 
-# Attach this policy to the App Tier's IAM Role
+# Attach KMS and Secrets policy to the App Tier's IAM Role
 resource "aws_iam_role_policy_attachment" "app_secrets_attach" {
   role       = aws_iam_role.app_role.name
   policy_arn = aws_iam_policy.app_secrets_policy.arn

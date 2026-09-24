@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------------
 # AWS Config Remediation Configuration
-# -------------------------------------------------------------------------
 resource "aws_config_remediation_configuration" "remediate_ssh" {
   config_rule_name = aws_config_config_rule.restricted_ssh.name
   target_type      = "SSM_DOCUMENT"

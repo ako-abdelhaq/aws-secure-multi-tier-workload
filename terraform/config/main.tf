@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------------
 # AWS Config: Configuration Recorder (Cost-Optimized Scope)
-# -------------------------------------------------------------------------
 resource "aws_config_configuration_recorder" "main" {
   name     = "main-config-recorder"
   role_arn = aws_iam_role.config_role.arn
@@ -19,10 +17,7 @@ resource "aws_config_configuration_recorder" "main" {
   }
 }
 
-# -------------------------------------------------------------------------
 # AWS Config: Delivery Channel & S3 Integration
-# -------------------------------------------------------------------------
-# Note: Update `var.logging_bucket.id` with your actual logging bucket reference
 resource "aws_config_delivery_channel" "main" {
   name           = "main-delivery-channel"
   s3_bucket_name = var.logging_bucket_name
@@ -38,9 +33,7 @@ resource "aws_config_delivery_channel" "main" {
   depends_on = [aws_config_configuration_recorder.main]
 }
 
-# -------------------------------------------------------------------------
 # AWS Config: Recorder Status (Enablement)
-# -------------------------------------------------------------------------
 resource "aws_config_configuration_recorder_status" "main_status" {
   name       = aws_config_configuration_recorder.main.name
   is_enabled = true

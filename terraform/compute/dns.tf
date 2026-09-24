@@ -1,3 +1,4 @@
+# Introducing internal zone file
 resource "aws_route53_zone" "internal" {
   name = "sec-app.internal"
 
@@ -8,6 +9,7 @@ resource "aws_route53_zone" "internal" {
   tags = { Name = "${var.project_prefix}-private-zone" }
 }
 
+# Creating a record for the app instance
 resource "aws_route53_record" "app" {
   zone_id = aws_route53_zone.internal.zone_id
   name    = "app.sec-app.internal"

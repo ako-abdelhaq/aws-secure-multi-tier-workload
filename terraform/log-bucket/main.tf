@@ -1,8 +1,8 @@
-# 1. Fetch current account ID dynamically for bucket naming and policy
+# Fetch current account ID dynamically for bucket naming and policy
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-# 2. Create the CloudTrail S3 Bucket
+# Create the CloudTrail S3 Bucket
 resource "aws_s3_bucket" "logging" {
   bucket        = "sec-app-logging-${data.aws_caller_identity.current.account_id}"
   
@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "logging" {
   tags = { Name = "${var.project_prefix}-logging-hub" }
 }
 
-# 3. Block All Public Access (Security Best Practice)
+# Block All Public Access (Security Best Practice)
 resource "aws_s3_bucket_public_access_block" "logging" {
   bucket                  = aws_s3_bucket.logging.id
   block_public_acls       = true
@@ -22,7 +22,7 @@ resource "aws_s3_bucket_public_access_block" "logging" {
   restrict_public_buckets = true
 }
 
-# 4. Enforce Server-Side Encryption
+# Enforce Server-Side Encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "logging" {
   bucket = aws_s3_bucket.logging.id
 
@@ -34,7 +34,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "logging" {
   }
 }
 
-# 5. Lifecycle Rule: Expire logs after 30 days to save lab costs
+# Lifecycle Rule: Expire logs after 30 days to save lab costs
 resource "aws_s3_bucket_lifecycle_configuration" "logging" {
   bucket = aws_s3_bucket.logging.id
 
@@ -52,7 +52,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "logging" {
   }
 }
 
-# 6. Mandatory Bucket Policy to allow CloudTrail and Config to write logs
+# Mandatory Bucket Policy to allow CloudTrail and Config to write logs
 resource "aws_s3_bucket_policy" "logging_bucket_policy" {
   bucket = aws_s3_bucket.logging.id
 
@@ -60,7 +60,7 @@ resource "aws_s3_bucket_policy" "logging_bucket_policy" {
     Version = "2012-10-17"
     Statement = [
       # CloudTrail permissions:
-      # 1. Service ACL Check: Allow CloudTrail to verify bucket ownership
+      # Service ACL Check: Allow CloudTrail to verify bucket ownership
       {
         Sid    = "AWSCloudTrailAclCheck"
         Effect = "Allow"
@@ -76,7 +76,7 @@ resource "aws_s3_bucket_policy" "logging_bucket_policy" {
           }
         }
       },
-      # 2. Log Delivery: Allow CloudTrail to write logs specifically for this account/trail
+      # Log Delivery: Allow CloudTrail to write logs specifically for this account/trail
       {
         Sid    = "AWSCloudTrailWrite"
         Effect = "Allow"
@@ -95,7 +95,7 @@ resource "aws_s3_bucket_policy" "logging_bucket_policy" {
       },
 
       # Config permissions:
-      # 1. Service ACL Check: Allow Config to verify bucket ownership
+      # Service ACL Check: Allow Config to verify bucket ownership
       {
         Sid       = "AllowConfigBucketAcl"
         Effect    = "Allow"
@@ -111,7 +111,7 @@ resource "aws_s3_bucket_policy" "logging_bucket_policy" {
           # No SourceARN as in initial API call, the AWS Config backend does not populate the aws:SourceArn (refer to AWS documentation for more details)
         }
       },
-      # 2. Log Delivery: Allow Config to write logs
+      # Log Delivery: Allow Config to write logs
       {
         Sid       = "AllowConfigPutObject"
         Effect    = "Allow"

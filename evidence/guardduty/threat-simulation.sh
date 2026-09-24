@@ -2,6 +2,7 @@ set -e
 DETECTOR_ID=""
 
 echo "Searching for GuardDuty Detector tagged 'sec-app-detector'..."
+
 # Look up using ARN (in case you have multiple detectors)
 DETECTOR_ID=$(aws resourcegroupstaggingapi get-resources \
   --tag-filters Key=Name,Values=sec-app-detector \
@@ -122,9 +123,9 @@ aws guardduty create-sample-findings \
 
 #Injecting simulated security events spanning critical phases of the cloud attack lifecycle:
 
-#Reconnaissance: Recon:EC2/PortProbeUnprotectedPort simulates an external adversary scanning your network for open, vulnerable ports.
+#Reconnaissance: Recon:EC2/PortProbeUnprotectedPort simulates an external adversary scanning the network for open, vulnerable ports.
 
-#Defense Evasion: Stealth:IAMUser/CloudTrailLoggingDisabled models an attacker attempting to cover their tracks by disabling your audit trails.
+#Defense Evasion: Stealth:IAMUser/CloudTrailLoggingDisabled models an attacker attempting to cover their tracks by disabling our audit trails.
 
 #Credential Theft & Exfiltration: UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS simulates the severe risk of EC2 instance profile credentials 
 #(from the Instance Metadata Service) being stolen and used from an external IP address outside AWS.

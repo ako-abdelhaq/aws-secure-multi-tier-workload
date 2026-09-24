@@ -1,14 +1,8 @@
-# -------------------------------------------------------------------------
-# 1. Account Context
-# -------------------------------------------------------------------------
-
+# Account Context
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-# -------------------------------------------------------------------------
-# 2. Least-Privilege IAM Role for Lambda
-# -------------------------------------------------------------------------
-
+# Least-Privilege IAM Role for Lambda
 resource "aws_iam_role" "lambda_incident_response_role" {
   name = "LambdaIncidentResponseRole"
 

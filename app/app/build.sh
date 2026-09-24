@@ -1,5 +1,6 @@
 # Execute this script from the main directory 
 # Create app.js and package.json from the previous step here
+
 echo "Building and deploying the app into the artifactory..."
 cd app/app
 npm install --omit=dev

@@ -1,3 +1,4 @@
+# Defining CMK to encrypt DB secret
 resource "aws_kms_key" "app_key" {
   description             = "CMK for RDS Master User Secret Encryption"
   enable_key_rotation     = true
@@ -6,7 +7,7 @@ resource "aws_kms_key" "app_key" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      # 1. Root Account Administration (Prevents permanent lockout)
+      # Root Account Administration (Prevents permanent lockout)
       {
         Sid    = "Enable IAM User Permissions"
         Effect = "Allow"
@@ -16,7 +17,7 @@ resource "aws_kms_key" "app_key" {
         Action   = "kms:*"
         Resource = "*"
       },
-      # 2. Allow RDS and Secrets Manager to generate and use the data key
+      # Allow RDS and Secrets Manager to generate and use the data key
       {
         Sid    = "AllowRDSAndSecretsManager"
         Effect = "Allow"
@@ -35,7 +36,7 @@ resource "aws_kms_key" "app_key" {
         ]
         Resource = "*"
       },
-      # 3. Allow App Tier explicit permission to decrypt
+      # Allow App Tier explicit permission to decrypt
       {
         Sid    = "AllowAppServerRoleToDecrypt"
         Effect = "Allow"

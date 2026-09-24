@@ -14,13 +14,13 @@
 
 echo "Scanning AWS Config for rules with INSUFFICIENT_DATA..."
 
-# 1. Fetch all rules where compliance type is exactly INSUFFICIENT_DATA
+# Fetch all rules where compliance type is exactly INSUFFICIENT_DATA
 # Using JMESPath query to extract just the rule names into a space-separated list
 STUCK_RULES=$(aws configservice describe-compliance-by-config-rule \
   --query 'ComplianceByConfigRules[?Compliance.ComplianceType==`INSUFFICIENT_DATA`].ConfigRuleName' \
   --output text)
 
-# 2. Check if the list is empty
+# Check if the list is empty
 if [ -z "$STUCK_RULES" ] \vert{}\vert{} [ "$STUCK_RULES" == "None" ]; then
   echo "No rules found in INSUFFICIENT_DATA state. Everything is evaluated!"
   exit 0
@@ -29,7 +29,7 @@ fi
 echo "Found rules awaiting evaluation: $STUCK_RULES"
 echo "Triggering immediate re-evaluation..."
 
-# 3. Force the evaluation (CLI accepts multiple space-separated rule names)
+# Force the evaluation (CLI accepts multiple space-separated rule names)
 aws configservice start-config-rules-evaluation --config-rule-names $STUCK_RULES
 
 if [ $? -eq 0 ]; then

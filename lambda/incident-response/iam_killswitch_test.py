@@ -15,6 +15,7 @@ class TestIAMKillSwitch(unittest.TestCase):
 
     @patch("iam_killswitch.iam_client")
     def test_successful_extraction_and_containment(self, mock_iam):
+        
         # Mock successful IAM update call
         mock_iam.update_access_key.return_value = {}
 

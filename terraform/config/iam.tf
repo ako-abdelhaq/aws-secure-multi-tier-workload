@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------------
 # AWS Config: IAM Role & Permissions
-# -------------------------------------------------------------------------
 data "aws_iam_policy_document" "config_assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -22,9 +20,7 @@ resource "aws_iam_role_policy_attachment" "config_managed_policy" {
 }
 
 
-# -------------------------------------------------------------------------
 # IAM Role: ConfigRemediationRole
-# -------------------------------------------------------------------------
 resource "aws_iam_role" "config_remediation_role" {
   name = "ConfigRemediationRole"
 
@@ -42,9 +38,7 @@ resource "aws_iam_role" "config_remediation_role" {
   })
 }
 
-# -------------------------------------------------------------------------
 # IAM Policy: SSH + S3 + IMDSv2 Remediation Powers
-# -------------------------------------------------------------------------
 resource "aws_iam_role_policy" "config_remediation_policy" {
   name = "ConfigRemediationPolicy"
   role = aws_iam_role.config_remediation_role.id

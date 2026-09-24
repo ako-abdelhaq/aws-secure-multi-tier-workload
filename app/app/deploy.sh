@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Get the App EC2 Instance ID
 APP_INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Tier,Values=App" "Name=instance-state-name,Values=running" --query "Reservations[0].Instances[0].InstanceId" --output text)
 

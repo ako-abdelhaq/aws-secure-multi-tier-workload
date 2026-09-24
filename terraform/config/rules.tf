@@ -1,8 +1,6 @@
-# -------------------------------------------------------------------------
 # AWS Config Rules: Core Baseline & Threat Model Alignment
-# -------------------------------------------------------------------------
 
-# 1. Block Unrestricted SSH (0.0.0.0/0)
+# Block Unrestricted SSH (0.0.0.0/0)
 resource "aws_config_config_rule" "restricted_ssh" {
   name = "${var.project_prefix}-restricted-ssh"
 
@@ -18,7 +16,7 @@ resource "aws_config_config_rule" "restricted_ssh" {
   depends_on = [aws_config_configuration_recorder_status.main_status]
 }
 
-# 2. Require EBS Volume Encryption
+# Require EBS Volume Encryption
 resource "aws_config_config_rule" "ebs_encryption" {
   name = "${var.project_prefix}-ebs-encrypted-volumes"
 
@@ -34,7 +32,7 @@ resource "aws_config_config_rule" "ebs_encryption" {
   depends_on = [aws_config_configuration_recorder_status.main_status]
 }
 
-# 3. Block Public S3 Read
+# Block Public S3 Read
 resource "aws_config_config_rule" "s3_public_read_prohibited" {
   name = "${var.project_prefix}-s3-public-read-prohibited"
 
@@ -50,7 +48,7 @@ resource "aws_config_config_rule" "s3_public_read_prohibited" {
   depends_on = [aws_config_configuration_recorder_status.main_status]
 }
 
-# 4. Require IMDSv2 on EC2 Instances (Mitigate SSRF / Credential Exfiltration)
+# Require IMDSv2 on EC2 Instances (Mitigate SSRF / Credential Exfiltration)
 resource "aws_config_config_rule" "ec2_imdsv2_check" {
   name = "${var.project_prefix}-ec2-imdsv2-check"
 
@@ -66,7 +64,7 @@ resource "aws_config_config_rule" "ec2_imdsv2_check" {
   depends_on = [aws_config_configuration_recorder_status.main_status]
 }
 
-# 5. Require RDS Storage Encryption (Defense-in-Depth for DB tier)
+# Require RDS Storage Encryption (Defense-in-Depth for DB tier)
 resource "aws_config_config_rule" "rds_storage_encrypted" {
   name = "${var.project_prefix}-rds-storage-encrypted"
 
@@ -83,7 +81,7 @@ resource "aws_config_config_rule" "rds_storage_encrypted" {
 }
 
 
-# 6. Detect Root Access Keys (Global Account Level Check)
+# Detect Root Access Keys (Global Account Level Check)
 resource "aws_config_config_rule" "iam_root_access_key_check" {
   name = "${var.project_prefix}-iam-root-access-key-check"
 

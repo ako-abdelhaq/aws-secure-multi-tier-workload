@@ -1,6 +1,4 @@
-# -------------------------------------------------------------------------
 # Custom SSM Automation Document for IMDSv2
-# -------------------------------------------------------------------------
 resource "aws_ssm_document" "enforce_imdsv2" {
   name            = "EnforceEC2InstanceIMDSv2"
   document_type   = "Automation"
@@ -10,9 +8,7 @@ resource "aws_ssm_document" "enforce_imdsv2" {
 
 }
 
-# -------------------------------------------------------------------------
 # IMDSv2 Remediation Configuration
-# -------------------------------------------------------------------------
 resource "aws_config_remediation_configuration" "remediate_imdsv2" {
   config_rule_name = aws_config_config_rule.ec2_imdsv2_check.name
   target_type      = "SSM_DOCUMENT"

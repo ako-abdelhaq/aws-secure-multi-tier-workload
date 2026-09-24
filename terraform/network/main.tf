@@ -30,6 +30,7 @@ resource "aws_subnet" "public_web_a" {
     Tier = "Web"
   }
 }
+
 # Another subnet for the ALB
 resource "aws_subnet" "public_web_b" {
   vpc_id                  = aws_vpc.main.id

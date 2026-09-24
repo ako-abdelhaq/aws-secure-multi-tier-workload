@@ -1,3 +1,4 @@
+# The main web ALB
 resource "aws_lb" "web" {
   name               = "${var.project_prefix}-alb"
   internal           = false
@@ -12,6 +13,7 @@ resource "aws_lb" "web" {
   }
 }
 
+# The target group of web ALB
 resource "aws_lb_target_group" "web" {
   name        = "${var.project_prefix}-web-tg"
   port        = 80
@@ -36,6 +38,7 @@ resource "aws_lb_target_group" "web" {
   }
 }
 
+# HTTP listener
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.web.arn
   port              = 80

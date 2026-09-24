@@ -1,3 +1,4 @@
+# The main DB
 resource "aws_db_instance" "main" {
   identifier = "${var.project_prefix}-db"
 

@@ -5,10 +5,10 @@ from datetime import datetime, timezone
 iam_client = boto3.client('iam')
 
 def lambda_handler(event, context):
-    # 1. Parse incoming EventBridge Payload
+    # Parse incoming EventBridge Payload
     detail = event.get('detail', {})
     
-    # 2. Extract Threat Details
+    # Extract Threat Details
     # GuardDuty includes the finding ID inside the detail block
     finding_id = detail.get('id', event.get('id', 'unknown-id'))
     finding_type = detail.get('type', 'unknown-type')
@@ -40,7 +40,7 @@ def lambda_handler(event, context):
         return {"statusCode": 400, "body": "Missing UserName or AccessKeyId in finding payload."}
 
     try:
-        # 3. Execute Automated Containment (The Kill Switch)
+        # Execute Automated Containment (The Kill Switch)
         # Deactivate the compromised access key
         iam_client.update_access_key(
             UserName=user_name,
@@ -57,7 +57,7 @@ def lambda_handler(event, context):
         # Update status to SUCCESS
         log_entry["executionStatus"] = "SUCCESS"
         
-        # 4. Emit the single-line structured JSON log to stdout
+        # Emit the single-line structured JSON log to stdout
         print(json.dumps(log_entry))
         
         return {"statusCode": 200, "body": "Containment successful"}
