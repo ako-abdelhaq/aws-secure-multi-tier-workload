@@ -40,7 +40,7 @@ async function initializeDatabase() {
 
         // Verify the connection actively works before allowing traffic
         const testClient = await pool.connect();
-        console.log(`Successfully connected to RDS at ${credentials.host}`);
+        console.log(`Successfully connected to RDS at`,process.env.DB_HOST);
         testClient.release();
 
         return pool;

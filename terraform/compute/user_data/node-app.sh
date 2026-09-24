@@ -53,6 +53,7 @@ source /etc/default/node-app
 AWS_REGION=${aws_region}
 
 # Use this portion if node-app works with env variables
+# You must include db_usename in the variables of compute module
 # Fetch the secure JSON payload from AWS Secrets Manager
 #SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id "$DB_SECRET_ARN" --region "$REGION" --query "SecretString" --output text)
 #echo $SECRET_JSON >> final.txt

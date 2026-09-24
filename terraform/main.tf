@@ -57,7 +57,7 @@ module "compute" {
   alb_dns_name          = module.alb.alb_dns_name
 
   db_host               = split(":", module.database.db_endpoint)[0]
-  db_username           = var.db_username
+  //db_username           = var.db_username
   db_name               = module.database.db_name
   
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 # Amazon Linux 2023 repos are on S3, allowing dnf to pull nodejs via S3 Gateway

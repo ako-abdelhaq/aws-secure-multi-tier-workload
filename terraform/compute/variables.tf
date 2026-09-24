@@ -54,7 +54,9 @@ variable "db_name" {
   type        = string
 }
 
+/*
 variable "db_username" {
   description = "Database master username"
   type        = string
 }
+*/
