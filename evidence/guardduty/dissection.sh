@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Execute the script from the main directory
 set -e
 DETECTOR_ID=""
 
@@ -28,7 +27,7 @@ DB_FINDING_ID=$(aws guardduty list-findings --detector-id $DETECTOR_ID \
 aws guardduty get-findings \
   --detector-id $DETECTOR_ID \
   --finding-ids "$DB_FINDING_ID" \
-  --output json > evidence/guardduty/leaked-db-credential-finding.json
+  --output json > leaked-db-credential-finding.json
 
 echo "Identity finding JSON extracted to evidence/guardduty/leaked-db-credential-finding.json"
 
@@ -43,6 +42,6 @@ IAM_FINDING_ID=$(aws guardduty list-findings \
 aws guardduty get-findings \
   --detector-id $DETECTOR_ID \
   --finding-ids "$IAM_FINDING_ID" \
-  --output json > evidence/guardduty/leaked-iam-credential-finding.json
+  --output json > leaked-iam-credential-finding.json
 
 echo "Identity finding JSON extracted to evidence/guardduty/leaked-iam-credential-finding.json"

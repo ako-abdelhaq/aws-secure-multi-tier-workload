@@ -1,3 +1,0 @@
-run threat-simulation.sh
-run dissertion.sh
-inspect the json findings files
