@@ -33,6 +33,11 @@ output "db_endpoint" {
   value       = module.database.db_endpoint
 }
 
+output "db_master_username" {
+  description = "The username of the master DB user."
+  value = var.db_username
+}
+
 output "db_secret_arn" {
   description = "The ARN of the managed database secret in Secrets Manager."
   value       = module.database.db_secret_arn

@@ -5,28 +5,9 @@ resource "aws_ssm_document" "enforce_imdsv2" {
   name            = "EnforceEC2InstanceIMDSv2"
   document_type   = "Automation"
   document_format = "YAML"
-  
-  content = <<DOC
-description: "Enforces IMDSv2 on an EC2 instance by requiring HTTP tokens."
-schemaVersion: "0.3"
-assumeRole: "{{ AutomationAssumeRole }}"
-parameters:
-  InstanceId:
-    type: String
-    description: "The ID of the EC2 instance (passed automatically by AWS Config)"
-  AutomationAssumeRole:
-    type: String
-    description: "The ARN of the remediation IAM role"
-mainSteps:
-  - name: modifyMetadataOptions
-    action: aws:executeAwsApi
-    inputs:
-      Service: ec2
-      Api: ModifyInstanceMetadataOptions
-      InstanceId: "{{ InstanceId }}"
-      HttpTokens: required
-      HttpEndpoint: enabled
-DOC
+
+  content = file("${path.root}/../ssm/enforce_imdsv2.yml")  
+
 }
 
 # -------------------------------------------------------------------------

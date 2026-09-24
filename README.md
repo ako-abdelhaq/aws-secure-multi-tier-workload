@@ -23,8 +23,11 @@ A secure, multi-tier AWS architecture focusing on cloud security, network segmen
 ## Setup Instructions
 *(Requirements: aws, terraform)*
 
-1.  Execute `bash ./scripts/deploy.sh`  (from the project directory).
-2.  To clean up: `bash ./scripts/destroy.sh`  (from the project directory).
+1. Execute `source ./scripts/deploy.sh`  (from the main directory).
+2. Use `curl` to reach the app from the terminal: 
+	eg. `curl $ALB_DNS_NAME/products`
+	![Smoke_Test](docs/smoke-test.png)
+3.  To clean up: `bash ./scripts/destroy.sh`  (from the project directory).
 
 
 ## Scenarios Demonstrated
