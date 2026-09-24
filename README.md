@@ -8,6 +8,10 @@ A secure, multi-tier AWS architecture focusing on cloud security, network segmen
 - **App Tier:** Node.js backend
 - **Database Tier:** Amazon RDS for PostgreSQL (Private)
 
+![Architecture](architecture/architecture.png)
+
+![Diagram](architecture/data-flow.png)
+
 ## Security Controls
 - **AWS WAF:** Layer 7 application protection
 - **GuardDuty & Security Hub:** Threat detection and posture management
@@ -17,10 +21,11 @@ A secure, multi-tier AWS architecture focusing on cloud security, network segmen
 - **CloudTrail:** Comprehensive auditing
 
 ## Setup Instructions
-*(To be populated during the implementation phase)*
-1. `terraform init`
-2. `terraform plan`
-3. `terraform apply`
+*(Requirements: aws, terraform)*
+
+1.  Execute `bash ./scripts/deploy.sh`  (from the project directory).
+2.  To clean up: `bash ./scripts/destroy.sh`  (from the project directory).
+
 
 ## Scenarios Demonstrated
 1. Network Isolation

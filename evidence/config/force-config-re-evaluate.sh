@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# The initial INSUFFICIENT_DATA state was not a Terraform misconfiguration, 
+# If you see INSUFFICIENT_DATA state initially, it is not a Terraform misconfiguration, 
 # but an expected architectural race condition.
 # The initial scan executed before the Data Plane finishes its asynchronous discovery sweep,
 # so Terraform correctly provisioned the rule but hit an asynchronous race condition,

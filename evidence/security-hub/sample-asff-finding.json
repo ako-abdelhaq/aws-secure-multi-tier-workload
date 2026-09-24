@@ -56,7 +56,7 @@
             "Resources": [
                 {
                     "Type": "AwsIamAccessKey",
-                    "Id": "AWS::IAM::AccessKey:AKIAEXAMPLE123456789",
+                    "Id": "AWS::IAM::AccessKey:AKIAROOTIOSFOUDEXAMPLE",
                     "Partition": "aws",
                     "Region": "eu-west-3",
                     "Details": {

@@ -5,7 +5,7 @@ npm install --omit=dev
 tar -czf app-v1.tar.gz app.js db.js package.json node_modules/ node-app.service
 
 # Upload to the S3 bucket created in Step 1
-BUCKET_NAME=$(aws s3 ls | grep 'artifacts' | awk '{print $3}' | head -n 1)
+BUCKET_NAME=$1
 
 if [ -z "$BUCKET_NAME" ]; then
   echo "ERROR: Could not find artifacts S3 bucket."
@@ -25,4 +25,3 @@ else
     echo "Uploading artifacts to S3 bucket failed!"
     exit 1
 fi
-

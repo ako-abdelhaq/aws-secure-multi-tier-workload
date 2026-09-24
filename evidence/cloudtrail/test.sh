@@ -13,7 +13,7 @@ fi
 
 # 2. Trigger a 'PutBucketTagging' API event
 aws s3api put-bucket-tagging \
-  --bucket sec-app-logging-$ACCOUNT_ID \
+  --bucket $LOGGING_BUCKET_NAME \
   --tagging 'TagSet=[{Key=TestEvent,Value="Ako Triggered"}]'
 
 # 3. Wait for CloudTrail delivery cycle (~5 minutes) then check CloudTrail for the triggered event
@@ -30,14 +30,14 @@ aws cloudtrail lookup-events \
 #    }
 
 # Look for the file that contains the log record
-year="2026"
-month="09"
-day="19"
-aws s3 ls s3://sec-app-logging-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/$year/$month/$day/
+year=$(date +%Y)
+month=$(date +%m)
+day=$(date +%d)
+aws s3 ls s3://$LOGGING_BUCKET_NAME/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/$year/$month/$day/
 # Then look for the file with time directly after the eventTime of the triggered event
 
 # Grab the log file containing the record (Follow the command but change the log file with the appropriate one)
-aws s3 cp s3://sec-app-logging-$ACCOUNT_ID/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/$year/$month/$day/<LOG_FILENAME>.json.gz ./test_log.gz
+aws s3 cp s3://$LOGGING_BUCKET_NAME/AWSLogs/$ACCOUNT_ID/CloudTrail/eu-west-3/$year/$month/$day/<LOG_FILENAME>.json.gz ./test_log.gz
 
 zcat ./test_log.gz | grep "PutBucketTagging"
 # Look at the output and look for the log with eventName "PutBucketTagging" and the following tagging under requestParameters
@@ -54,11 +54,9 @@ zcat ./test_log.gz | grep "Ako Triggered"
 # 4. Cryptographic validation 
 # In this step we'll have to wait for about 1h for AWS t generate the digest files
 
-# Get your current AWS Region
-REGION=$(aws configure get region)
 
 # Construct the exact Trail ARN
-TRAIL_ARN="arn:aws:cloudtrail:${REGION}:${ACCOUNT_ID}:trail/workload-audit-trail"
+TRAIL_ARN="arn:aws:cloudtrail:${AWS_REGION}:${ACCOUNT_ID}:trail/workload-audit-trail"
 
 # Set a start time for 2 hours ago (UTC format is required)
 # Use this for Linux:
