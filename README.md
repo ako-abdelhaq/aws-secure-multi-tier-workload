@@ -10,6 +10,8 @@ A secure, multi-tier AWS architecture focusing on cloud security, network segmen
 
 ![Architecture](architecture/architecture.png)
 
+## Data flow
+
 ![Diagram](architecture/data-flow.png)
 
 ## Security Controls
@@ -31,6 +33,7 @@ A secure, multi-tier AWS architecture focusing on cloud security, network segmen
 
 
 ## Scenarios Demonstrated
+(Refer to `docs/threat-model.md` for more details)
 1. Network Isolation
 2. Configuration Drift & Automated Remediation
 3. Security Incident Response

@@ -19,6 +19,8 @@
   * Target Database Identifier (ARN)
   * Engine Type (e.g., PostgreSQL)
   * Compromised Database User (`dbUser`)
+<br>
+<br>
 
 **2. Determine Ingress Path (Network vs. Pivot)**
 * **Action:** Determine how the attacker reached the database.
@@ -26,6 +28,7 @@
 * **Decision Tree:**
   * **Direct External IP:** Indicates a severe perimeter failure. The database Security Group is misconfigured (e.g., `0.0.0.0/0` exposed on port 5432).
   * **Internal IP (VPC):** Indicates an internal pivot. The attacker has likely compromised an EC2 App Instance or a bastion host inside the network, bypassed the network perimeter, and is attacking laterally.
+<br>
 
 ---
 
@@ -56,6 +59,6 @@
 * **Action:** Close the network vulnerability that allowed the ingress. 
   **Command:** Verify the RDS Security Group rules. Strip any unauthorized ingress rules. Ensure port 5432 only accepts ingress traffic originating explicitly from the Application Tier Security Group ID.
 
-### The Security Engineering Behind This Playbook As a security lead, I look for one specific thing when reviewing an engineer's incident response playbook: 
-the order of operations in the Containment Phase. Notice how the playbook explicitly states to rotate the secret *before* killing the active database sessions. Junior analysts often panic, see an active malicious connection, and immediately kill the database session (Step 2). However, if you kill the session while the compromised password is still valid, the attacker's automated script will simply re-authenticate and reconnect 50 milliseconds later. By rotating the secret in AWS Secrets Manager first (Step 1), you change the locks on the door. Then, when you terminate the active backend processes in Postgres (Step 2), the attacker gets kicked out and is physically unable to log back in. Finally, locking down the Security Group (Step 3) ensures that even if they find another credential, their network path is blocked.
-  
+### The Security Engineering Behind This Playbook: 
+the order of operations in the Containment Phase. Notice how the playbook explicitly states to rotate the secret *before* killing the active database sessions. If you kill the session while the compromised password is still valid, the attacker's automated script will simply re-authenticate and reconnect 50 milliseconds later. By rotating the secret in AWS Secrets Manager first (Step 1), we change the locks on the door. Then, when we terminate the active backend processes in Postgres (Step 2), the attacker gets kicked out and is physically unable to log back in. Finally, locking down the Security Group (Step 3) ensures that even if they find another credential, their network path is blocked.
+
