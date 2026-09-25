@@ -17,6 +17,7 @@ The architecture touches: network segmentation, Zero Trust, Least Privilege, Enc
 ![Diagram](architecture/data-flow.png)
 
 ## Security Controls
+(Refer to `docs/security-controls.md` for more details)
 - **AWS WAF:** Layer 7 application protection
 - **GuardDuty & Security Hub:** Threat detection and posture management
 - **AWS Config:** Configuration compliance monitoring
