@@ -28,5 +28,4 @@ else
     exit 1
 fi
 
-cd..
-cd..
+cd ../..
