@@ -24,11 +24,11 @@ override.tf.json
 terraform.rc
 
 # Node modules
-app/node_modules/
-app/npm-debug.log
-app/yarn-error.log
-app/yarn.lock
-app/package-lock.json
+app/app/node_modules/
+app/app/npm-debug.log
+app/app/yarn-error.log
+app/app/yarn.lock
+app/app/package-lock.json
 
 # Local environment variables
 .env
@@ -43,3 +43,6 @@ app/package-lock.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Lambda output
+iam_killswitch.zip

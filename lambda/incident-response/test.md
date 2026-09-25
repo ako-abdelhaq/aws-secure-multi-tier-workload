@@ -6,7 +6,7 @@
 	aws  iam  create-user  --user-name  test-compromised-user
 	```
 	```bash
-	KEY_OUTPUT=$(aws iam create-access-key --user-name my-iam-user \
+	KEY_OUTPUT=$(aws iam create-access-key --user-name test-compromised-user \
 				--query 'AccessKey.[AccessKeyId,SecretAccessKey]' \
 				--output text)
 	```
@@ -38,13 +38,22 @@
 
 	**Don't forget to REMOVE it when you finish testing !!!!**
 <br>
-
+<br>
 
 4. Push the event directly to the default EventBridge bus. This simulates GuardDuty detecting credential exfiltration in real-time and immediately trips the EventBridge rule we built in Terraform.
 
-
 	```bash
-	aws  events  put-events  --entries  '[{"EventBusName": "default", "Source": "mock.guardduty", "DetailType": "GuardDuty Finding", "Detail": "{\"type\":\"UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS\",\"severity\":8.0,\"resource\":{\"resourceType\":\"AccessKey\",\"accessKeyDetails\":{\"userName\":\"test-compromised-user\",\"accessKeyId\":\"$TEMP_ACCESS_KEY_ID\"}}}"}]'		```
+	PAYLOAD='[{"EventBusName": "default", "Source": "mock.guardduty", "DetailType": "GuardDuty Finding", "Detail": "{\"type\":\"UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS\",\"severity\":8.0,\"resource\":{\"resourceType\":\"AccessKey\",\"accessKeyDetails\":{\"userName\":\"test-compromised-user\",\"accessKeyId\":\"TEMP_ACCESS_KEY_ID\"}}}"}]'
+	```
+	```bash
+	UPDATED_PAYLOAD=$(echo "$PAYLOAD" | sed "s/TEMP_ACCESS_KEY_ID/$TEMP_ACCESS_KEY_ID/g")
+	```
+	```bash
+	event_entry_json="'$UPDATED_PAYLOAD'"
+	```
+	```bash
+	aws events  put-events  --entries  "$event_enrty_json"
+	```
 <br>
 
 

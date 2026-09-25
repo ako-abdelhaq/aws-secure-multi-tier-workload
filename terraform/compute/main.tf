@@ -31,7 +31,7 @@ data "aws_ami" "amazon_linux_x86" {
 # Web EC2 (Public Subnet)
 resource "aws_instance" "web" {
   ami                         = data.aws_ami.amazon_linux_x86.id
-  instance_type               = "t4g.micro" #You can also use t4g.micro
+  instance_type               = "t3.micro" # The t4g.micro is best for cost/performance (You may face some availability issues). 
   subnet_id                   = var.public_web_subnet_id
   vpc_security_group_ids      = [var.web_sg_id]
   iam_instance_profile        = aws_iam_instance_profile.web_profile.name
@@ -62,7 +62,7 @@ resource "aws_instance" "web" {
 # App EC2 (Private Subnet)
 resource "aws_instance" "app" {
   ami                         = data.aws_ami.amazon_linux_x86.id
-  instance_type               = "t4g.micro"
+  instance_type               = "t3.micro"
   subnet_id                   = var.private_app_subnet_id
   vpc_security_group_ids      = [var.app_sg_id]
   iam_instance_profile        = aws_iam_instance_profile.app_profile.name
