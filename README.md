@@ -40,4 +40,6 @@ The architecture touches: network segmentation, Zero Trust, Least Privilege, Enc
 2. Configuration Drift & Automated Remediation
 3. Security Incident Response
 
+<br>
+
 										           AKO 2026
