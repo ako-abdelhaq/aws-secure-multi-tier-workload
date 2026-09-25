@@ -1,12 +1,14 @@
 # Secure Multi-Tier AWS Architecture
 
-## Project Overview
-A secure, multi-tier AWS architecture focusing on cloud security, network segmentation, least privilege, encryption, threat detection, and automated incident response. This project is intentionally lean, built as a realistic security engineering lab without over-engineering.
+## Overview
+Secure Multi-Tier AWS Workload with Automated Threat Detection, Compliance Auditing & Event-Driven Incident Response.
+
+The architecture touches: network segmentation, Zero Trust, Least Privilege, Encryption, Automated Threat Detection, Compliance Auditing & Event-Driven Incident Response.
 
 ## Architecture
-- **Web Tier:** Node.js frontend/proxy
-- **App Tier:** Node.js backend
-- **Database Tier:** Amazon RDS for PostgreSQL (Private)
+- **Web Tier:** NGINX
+- **App Tier:** Node.js
+- **Database Tier:** Amazon RDS for PostgreSQL
 
 ![Architecture](architecture/architecture.png)
 
