@@ -72,6 +72,10 @@
 	```bash
 	aws  logs  tail  /aws/lambda/Security-Auto-Containment-IAM  --since  1h
 	```
+
+	You should see something similar to this:
+	
+	![lambda_log](lambda_log.png)
 <br>
 
 

@@ -48,6 +48,7 @@ zcat ./test_log.gz | grep "PutBucketTagging"
 #            "Key": "TestEvent"
 #        }
 #    }
+
 zcat ./test_log.gz | grep "Ako Triggered"
 
 # Cryptographic validation 
