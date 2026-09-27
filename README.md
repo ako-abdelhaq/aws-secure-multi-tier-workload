@@ -11,6 +11,10 @@ The architecture touches: network segmentation, Zero Trust, Least Privilege, Enc
 - **Database Tier:** Amazon RDS for PostgreSQL
 
 ![Architecture](architecture/architecture.png)
+*Note: The architecture diagram shows 2 DB instances in 2 private subnets, but 
+for the seek of simplicity and for more control on the cost we used just one instance. 
+Feel free to modify `terraform/database/main.tf` to add a second one (or just set
+multi_az = true).*
 
 ## Data flow
 
@@ -40,6 +44,21 @@ The architecture touches: network segmentation, Zero Trust, Least Privilege, Enc
 1. Network Isolation
 2. Configuration Drift & Automated Remediation
 3. Security Incident Response
+
+
+## Tests and Operations
+
+
+You'll find all tests, procedures, and outputs in `evidence/`.
+Check the test you want to run depending on the module. All instructions are provided.
+
+Check `app/` to modify the web app (`app/web`) or the backend (`app/app`).
+
+Check `Lambda/incident-response` to test the logic of the Lambda function locally.
+
+<br>
+
+If you have any other inquiry, feel free to reach me out ;)
 
 <br>
 
