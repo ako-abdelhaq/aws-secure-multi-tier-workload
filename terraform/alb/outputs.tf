@@ -12,12 +12,3 @@ output "web_alb_arn" {
   description = "The ARN of the web ALB"
   value = aws_lb.web.arn
 }
-
-/*
-output "target_group_arn" {
-  description = "The ARN of the Web Target Group."
-  value       = aws_lb_target_group.web.arn
-}
-
-
-*/

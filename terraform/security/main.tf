@@ -197,10 +197,6 @@ resource "aws_vpc_security_group_ingress_rule" "app_from_web" {
 }
 
 
-
-
-
-
 resource "aws_vpc_security_group_egress_rule" "app_to_db" {
   security_group_id            = aws_security_group.app.id
   description                  = "Allow outbound PostgreSQL to DB SG"

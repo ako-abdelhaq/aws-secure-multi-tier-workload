@@ -27,8 +27,8 @@ if [ $? -ne 0 ]; then
 fi
 
 export AWS_REGION=$(terraform output -raw aws_region)
-export ALB_ARN=$(terraform output -raw alb_arn)
-export ALB_DNS_NAME=$(terraform output -raw alb_dns_name)
+export ALB_ARN=$(terraform output -raw web_alb_arn)
+export ALB_DNS_NAME=$(terraform output -raw web_alb_dns_name)
 export ARTIFACT_BUCKET_NAME=$(terraform output -raw artifact_bucket_name)
 export DB_ENDPOINT=$(terraform output -raw db_endpoint)
 export BD_USER=$(terraform output -raw db_master_username)

@@ -92,12 +92,3 @@ resource "aws_instance" "app" {
 
   tags = { Name = "${var.project_prefix}-app-ec2-${count.index + 1}", Tier = "App" }
 }
-
-/*
-# Web ALB Target Group Attachment
-resource "aws_lb_target_group_attachment" "web_attachment" {
-  target_group_arn = var.target_group_arn
-  target_id        = aws_instance.web.id
-  port             = 80
-}
-*/

@@ -28,24 +28,10 @@ variable "app_sg_id" {
   type        = string
 }
 
-/*
-variable "web_alb_dns_name" {
-  description = "The dns name of the web ALB"
-  type        = string
-}
-*/
-
 variable "app_alb_dns_name" {
   description = "The dns name of the app ALB"
   type        = string
 }
-
-/*
-variable "target_group_arn" {
-  description = "The ARN of the ALB Target Group to attach the Web instance."
-  type        = string
-}
-*/
 
 variable "db_secret_arn" {
   description = "The ARN of the managed database secret."
