@@ -20,7 +20,10 @@ server {
 
     # Amazon VPC DNS resolver
     resolver 169.254.169.253 valid=30s;
+
+    # App ALB DNS name
     set $app "http://${app_alb_dns_name}";
+
 
     location /health {
         access_log off;
@@ -44,7 +47,7 @@ server {
     }
 
     location / {
-        set $upstream_endpoint ${app_alb_dns_name};
+        set $upstream_endpoint "$app";
 
         proxy_pass $upstream_endpoint;
         

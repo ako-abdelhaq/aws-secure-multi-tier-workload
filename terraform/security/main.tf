@@ -48,7 +48,7 @@ resource "aws_security_group" "vpc_endpoints" {
   tags = { Name = "${var.project_prefix}-endpoints-sg", Tier = "Security" }
 }
 
-# ALB RULES (Internet Ingress -> Forward to Web ALB)
+# Web ALB RULES (Internet Ingress -> Forward to Web ALB)
 
 resource "aws_vpc_security_group_ingress_rule" "web_alb_http_in" {
   security_group_id = aws_security_group.web_alb.id
@@ -88,7 +88,7 @@ resource "aws_vpc_security_group_egress_rule" "web_alb_https_out" {
 }
 
 
-
+# APP ALB RULES
 
 resource "aws_vpc_security_group_ingress_rule" "app_alb_http_in" {
   security_group_id = aws_security_group.app_alb.id
@@ -99,6 +99,23 @@ resource "aws_vpc_security_group_ingress_rule" "app_alb_http_in" {
   ip_protocol       = "tcp"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "app_alb_from_web" {
+  security_group_id            = aws_security_group.app_alb.id
+  description                  = "Allow inbound on port 3000 from web instances for app ALB"
+  referenced_security_group_id = aws_security_group.web.id
+  from_port                    = var.app_port
+  to_port                      = var.app_port
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "app_alb_to_app" {
+  security_group_id            = aws_security_group.app_alb.id
+  description                  = "Allow outbound HTTP out of app ALB to app"
+  referenced_security_group_id = aws_security_group.app.id
+  from_port                    = var.app_port
+  to_port                      = var.app_port
+  ip_protocol                  = "tcp"
+}
 
 resource "aws_vpc_security_group_egress_rule" "app_alb_http_out" {
   security_group_id = aws_security_group.app_alb.id
@@ -140,6 +157,15 @@ resource "aws_vpc_security_group_egress_rule" "web_to_app_alb" {
   ip_protocol                  = "tcp"
 }
 
+resource "aws_vpc_security_group_egress_rule" "web_to_app" {
+  security_group_id            = aws_security_group.web.id
+  description                  = "Allow outbound to App tier on port 3000"
+  referenced_security_group_id = aws_security_group.app.id
+  from_port                    = var.app_port
+  to_port                      = var.app_port
+  ip_protocol                  = "tcp"
+}
+
 resource "aws_vpc_security_group_egress_rule" "web_https_out" {
   security_group_id = aws_security_group.web.id
   description       = "Allow outbound HTTPS for AWS Systems Manager and package updates"
@@ -151,15 +177,6 @@ resource "aws_vpc_security_group_egress_rule" "web_https_out" {
 
 
 # APP TIER RULES
-
-resource "aws_vpc_security_group_ingress_rule" "app_alb_from_web" {
-  security_group_id            = aws_security_group.app_alb.id
-  description                  = "Allow inbound on port 80 from web instances"
-  referenced_security_group_id = aws_security_group.web.id
-  from_port                    = 80
-  to_port                      = 80
-  ip_protocol                  = "tcp"
-}
 
 resource "aws_vpc_security_group_ingress_rule" "app_from_app_alb" {
   security_group_id            = aws_security_group.app.id

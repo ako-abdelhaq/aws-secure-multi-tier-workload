@@ -1,7 +1,7 @@
 # The main app ALB
 resource "aws_lb" "app" {
   name               = "${var.project_prefix}-app-alb"
-  internal           = false
+  internal           = true
   load_balancer_type = "application"
   security_groups    = [var.app_alb_sg_id]
   subnets            = var.private_subnet_ids

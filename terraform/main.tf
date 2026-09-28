@@ -17,15 +17,15 @@ module "security" {
 module "alb" {
   source = "./alb"
 
-  project_prefix    = var.project_prefix
-  vpc_id            = module.network.vpc_id
-  public_subnet_ids = module.network.public_subnet_ids
-  private_subnet_ids = module.network.private_app_subnet_ids
-  web_alb_sg_id = module.security.web_alb_sg_id
-  web_instance_ids = module.compute.web_instance_ids
-  app_alb_sg_id = module.security.app_alb_sg_id
-  app_instance_ids = module.compute.app_instance_ids
-  app_port = var.app_port
+  project_prefix      = var.project_prefix
+  vpc_id              = module.network.vpc_id
+  public_subnet_ids   = module.network.public_subnet_ids
+  private_subnet_ids  = module.network.private_app_subnet_ids
+  web_alb_sg_id       = module.security.web_alb_sg_id
+  web_instance_ids    = module.compute.web_instance_ids
+  app_alb_sg_id       = module.security.app_alb_sg_id
+  app_instance_ids    = module.compute.app_instance_ids
+  app_port            = var.app_port
 }
 
 module "vpc-endpoints" {
@@ -91,7 +91,7 @@ module "cloudtrail" {
 module "guardduty" {
   source = "./guardduty"
 
-  project_prefix        = var.project_prefix
+  project_prefix   = var.project_prefix
 }
 
 module "security-hub" {
@@ -103,7 +103,7 @@ module "security-hub" {
 module "config" {
   source = "./config"
   
-  project_prefix = var.project_prefix
+  project_prefix      = var.project_prefix
   logging_bucket_name = module.log-bucket.logging_bucket_name
 }
 
@@ -116,6 +116,6 @@ module "lambda" {
 module "waf" {
   source = "./waf"
 
-  project_prefix = var.project_prefix
-  alb_arn = module.alb.web_alb_arn
+  project_prefix  = var.project_prefix
+  alb_arn         = module.alb.web_alb_arn
 }
