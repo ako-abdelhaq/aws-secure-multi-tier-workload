@@ -187,6 +187,7 @@ resource "aws_vpc_security_group_ingress_rule" "app_from_app_alb" {
   ip_protocol                  = "tcp"
 }
 
+# Optional (For testing purposes)
 resource "aws_vpc_security_group_ingress_rule" "app_from_web" {
   security_group_id            = aws_security_group.app.id
   description                  = "Allow inbound on port 3000 exclusively from web"
