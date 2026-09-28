@@ -11,6 +11,7 @@ module "security" {
 
   project_prefix = var.project_prefix
   vpc_id         = module.network.vpc_id
+  app_port       = var.app_port
 }
 
 module "alb" {
@@ -19,17 +20,22 @@ module "alb" {
   project_prefix    = var.project_prefix
   vpc_id            = module.network.vpc_id
   public_subnet_ids = module.network.public_subnet_ids
-  alb_sg_id         = module.security.alb_sg_id
+  private_subnet_ids = module.network.private_app_subnet_ids
+  web_alb_sg_id = module.security.web_alb_sg_id
+  web_instance_ids = module.compute.web_instance_ids
+  app_alb_sg_id = module.security.app_alb_sg_id
+  app_instance_ids = module.compute.app_instance_ids
+  app_port = var.app_port
 }
 
 module "vpc-endpoints" {
   source = "./vpc-endpoints"
 
-  project_prefix         = var.project_prefix
-  vpc_id                 = module.network.vpc_id
-  private_app_subnet_id  = module.network.private_app_subnet_id
-  vpc_endpoints_sg_id    = module.security.vpc_endpoints_sg_id
-  private_route_table_id = module.network.private_route_table_id # Passed for S3 Gateway
+  project_prefix          = var.project_prefix
+  vpc_id                  = module.network.vpc_id
+  private_app_subnet_ids  = module.network.private_app_subnet_ids
+  vpc_endpoints_sg_id     = module.security.vpc_endpoints_sg_id
+  private_route_table_id  = module.network.private_route_table_id # Passed for S3 Gateway
 }
 
 module "database" {
@@ -46,19 +52,20 @@ module "database" {
 module "compute" {
   source = "./compute"
 
-  project_prefix        = var.project_prefix
-  vpc_id                = module.network.vpc_id
-  public_web_subnet_id  = module.network.public_web_subnet_a_id
-  private_app_subnet_id = module.network.private_app_subnet_id
-  web_sg_id             = module.security.web_sg_id
-  app_sg_id             = module.security.app_sg_id
-  db_secret_arn         = module.database.db_secret_arn
-  target_group_arn      = module.alb.target_group_arn
-  alb_dns_name          = module.alb.alb_dns_name
+  project_prefix          = var.project_prefix
+  vpc_id                  = module.network.vpc_id
+  public_web_subnet_ids   = module.network.public_subnet_ids
+  private_app_subnet_ids  = module.network.private_app_subnet_ids
+  web_sg_id               = module.security.web_sg_id
+  app_sg_id               = module.security.app_sg_id
+  db_secret_arn           = module.database.db_secret_arn
+  //target_group_arn        = module.alb.target_group_arn
+  app_alb_dns_name        = module.alb.app_alb_dns_name
 
   db_host               = split(":", module.database.db_endpoint)[0]
   //db_username           = var.db_username
   db_name               = module.database.db_name
+
   
 
   depends_on = [
@@ -110,5 +117,5 @@ module "waf" {
   source = "./waf"
 
   project_prefix = var.project_prefix
-  alb_arn = module.alb.alb_arn
+  alb_arn = module.alb.web_alb_arn
 }

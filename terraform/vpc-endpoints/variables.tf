@@ -8,9 +8,9 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "private_app_subnet_id" {
-  description = "The subnet ID where endpoints will be placed."
-  type        = string
+variable "private_app_subnet_ids" {
+  description = "The private subnet IDs where endpoints will be placed."
+  type        = list(string)
 }
 
 variable "vpc_endpoints_sg_id" {

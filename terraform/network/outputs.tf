@@ -5,22 +5,32 @@ output "vpc_id" {
 
 output "public_web_subnet_a_id" {
   description = "The ID of the public web subnet a."
-  value       = aws_subnet.public_web_a.id
+  value       = aws_subnet.public_web_subnet_a.id
 }
 
 output "public_web_subnet_b_id" {
   description = "The ID of the public web subnet b."
-  value       = aws_subnet.public_web_b.id
+  value       = aws_subnet.public_web_subnet_b.id
 }
 
 output "public_subnet_ids" {
   description = "List of public subnet IDs."
-  value       = [aws_subnet.public_web_a.id, aws_subnet.public_web_b.id]
+  value       = [aws_subnet.public_web_subnet_a.id, aws_subnet.public_web_subnet_b.id]
 }
 
-output "private_app_subnet_id" {
-  description = "The ID of the private application subnet."
-  value       = aws_subnet.private_app.id
+output "private_app_subnet_a_id" {
+  description = "The ID of the private application subnet a."
+  value       = aws_subnet.private_app_subnet_a.id
+}
+
+output "private_app_subnet_b_id" {
+  description = "The ID of the private application subnet b."
+  value       = aws_subnet.private_app_subnet_b.id
+}
+
+output "private_app_subnet_ids" {
+  description = "List of private subnet IDs."
+  value       = [aws_subnet.private_app_subnet_a.id, aws_subnet.private_app_subnet_b.id]
 }
 
 output "db_subnet_group_name" {

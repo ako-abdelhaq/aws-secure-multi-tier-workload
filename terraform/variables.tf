@@ -33,3 +33,9 @@ variable "db_username" {
   type        = string
   default     = "ako_admin" # Security by obscurity
 }
+
+variable "app_port" {
+  description = "The port used by app."
+  type = number
+  default = 3000
+}

@@ -18,14 +18,19 @@ output "public_subnet_ids" {
   value       = module.network.public_subnet_ids
 }
 
-output "alb_dns_name" {
-  description = "The public DNS name of the ALB entrypoint."
-  value       = module.alb.alb_dns_name
+output "web_alb_dns_name" {
+  description = "The public DNS name of the web ALB entrypoint."
+  value       = module.alb.web_alb_dns_name
 }
 
-output "alb_arn" {
-  description = "The ARN of the ALB."
-  value = module.alb.alb_arn
+output "app_alb_dns_name" {
+  description = "The DNS name of the internal app ALB entrypoint."
+  value       = module.alb.app_alb_dns_name
+}
+
+output "web_alb_arn" {
+  description = "The ARN of the web ALB."
+  value = module.alb.web_alb_arn
 }
 
 output "db_endpoint" {

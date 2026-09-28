@@ -15,12 +15,12 @@ resource "aws_route_table" "public" {
 
 # Associate Web Subnets with Public Route Table
 resource "aws_route_table_association" "public_web_a" {
-  subnet_id      = aws_subnet.public_web_a.id
+  subnet_id      = aws_subnet.public_web_subnet_a.id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "public_web_b" {
-  subnet_id      = aws_subnet.public_web_b.id
+  subnet_id      = aws_subnet.public_web_subnet_b.id
   route_table_id = aws_route_table.public.id
 }
 
@@ -39,8 +39,13 @@ resource "aws_route_table" "private" {
 }
 
 # Associate App Subnet with Private Route Table
-resource "aws_route_table_association" "private_app" {
-  subnet_id      = aws_subnet.private_app.id
+resource "aws_route_table_association" "private_app_a" {
+  subnet_id      = aws_subnet.private_app_subnet_a.id
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "private_app_b" {
+  subnet_id      = aws_subnet.private_app_subnet_b.id
   route_table_id = aws_route_table.private.id
 }
 

@@ -1,3 +1,4 @@
+/*
 # Introducing internal zone file
 resource "aws_route53_zone" "internal" {
   name = "sec-app.internal"
@@ -17,3 +18,4 @@ resource "aws_route53_record" "app" {
   ttl     = 60
   records = [aws_instance.app.private_ip]
 }
+*/

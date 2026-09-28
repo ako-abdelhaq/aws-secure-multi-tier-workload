@@ -28,18 +28,19 @@ data "aws_ami" "amazon_linux_x86" {
   }
 }
 
-# Web EC2 (Public Subnet)
+# Web EC2 instances (Public Subnet)
 resource "aws_instance" "web" {
+  count                       = 2
   ami                         = data.aws_ami.amazon_linux_x86.id
   instance_type               = "t3.micro" # The t4g.micro is best for cost/performance (You may face some availability issues). 
-  subnet_id                   = var.public_web_subnet_id
+  subnet_id                   = var.public_web_subnet_ids[count.index%2]
   vpc_security_group_ids      = [var.web_sg_id]
   iam_instance_profile        = aws_iam_instance_profile.web_profile.name
   associate_public_ip_address = true
 
   #user_data = file("${path.module}/user_data/web.sh")
   user_data = templatefile("${path.module}/user_data/web.sh", {
-    internal_alb_dns = var.alb_dns_name  # Ensure this points to your actual ALB resource
+    app_alb_dns_name = var.app_alb_dns_name  # Ensure this points to the app ALB DNS name
   })
 
   user_data_replace_on_change = true
@@ -56,14 +57,15 @@ resource "aws_instance" "web" {
     ]
   }
 
-  tags = { Name = "${var.project_prefix}-web-ec2", Tier = "Web" }
+  tags = { Name = "${var.project_prefix}-web-ec2-${count.index + 1}", Tier = "Web" }
 }
 
-# App EC2 (Private Subnet)
+# App EC2 instances (Private Subnet)
 resource "aws_instance" "app" {
+  count = 2
   ami                         = data.aws_ami.amazon_linux_x86.id
   instance_type               = "t3.micro"
-  subnet_id                   = var.private_app_subnet_id
+  subnet_id                   = var.private_app_subnet_ids[count.index%2]
   vpc_security_group_ids      = [var.app_sg_id]
   iam_instance_profile        = aws_iam_instance_profile.app_profile.name
   associate_public_ip_address = false
@@ -88,12 +90,14 @@ resource "aws_instance" "app" {
     ]
   }
 
-  tags = { Name = "${var.project_prefix}-app-ec2", Tier = "App" }
+  tags = { Name = "${var.project_prefix}-app-ec2-${count.index + 1}", Tier = "App" }
 }
 
-# ALB Target Group Attachment
+/*
+# Web ALB Target Group Attachment
 resource "aws_lb_target_group_attachment" "web_attachment" {
   target_group_arn = var.target_group_arn
   target_id        = aws_instance.web.id
   port             = 80
 }
+*/
